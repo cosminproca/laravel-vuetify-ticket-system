@@ -24,26 +24,42 @@ const mutations = {
 };
 
 const actions = {
+  async register({ commit }, form) {
+    try {
+      const { data } = await axiosInstance.post('api/auth/register', form);
+      commit('SAVE_TOKEN', { token: data.access_token });
+
+      return data;
+    } catch (e) {
+      console.log(e);
+    }
+  },
   async login({ commit }, form) {
     try {
-      const { data } = await axiosInstance.post('api/login', form);
+      const { data } = await axiosInstance.post('api/auth/login', form);
       commit('SAVE_TOKEN', { token: data.access_token });
+
+      return data;
     } catch (e) {
       console.log(e);
     }
   },
   async logout({ commit }) {
     try {
-      await axiosInstance.post('api/logout');
+      const { data } = await axiosInstance.post('api/auth/logout');
       commit('LOGOUT');
+
+      return data;
     } catch (e) {
       console.log(e);
     }
   },
   async user({ commit }) {
     try {
-      const { data } = await axiosInstance.get('api/user');
+      const { data } = await axiosInstance.get('api/auth/user');
       commit('SAVE_USER', data);
+
+      return data;
     } catch (e) {
       console.log(e);
     }
@@ -51,6 +67,7 @@ const actions = {
 };
 
 export default {
+  namespaced: true,
   state,
   getters,
   mutations,

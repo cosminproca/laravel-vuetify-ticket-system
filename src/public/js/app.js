@@ -43,7 +43,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "js/" + {"Home":"2d4c2c48bce088fe8c44","auth-Login":"28139cc92d3c3c6d36d1"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "js/" + {"Home":"1748e966afa05a797d1e","auth-Login":"523ad931c64c14d5ef0e","auth-Register":"a199b386ee3d1a581d93"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -2108,14 +2108,44 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Admin',
   data: function data() {
     return {
       cards: ['Today', 'Yesterday'],
       drawer: true,
-      links: [['mdi-inbox-arrow-down', 'Inbox'], ['mdi-send', 'Send'], ['mdi-delete', 'Trash'], ['mdi-alert-octagon', 'Spam'], ['mdi-logout', 'Logout']]
+      loading: true,
+      links: [['mdi-home', '/', 'Home'], ['mdi-account', '/register', 'Register'], ['mdi-login', '/login', 'Login'], ['mdi-logout', '/logout', 'Logout']]
     };
+  },
+  mounted: function mounted() {
+    this.loading = false;
   }
 });
 
@@ -5435,7 +5465,14 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c(
     "v-app",
-    [_c(_vm.layout, { tag: "component" }, [_c("router-view")], 1)],
+    [
+      _c(
+        _vm.$route.meta.layout && _vm.layout,
+        { tag: "component" },
+        [_c("router-view")],
+        1
+      )
+    ],
     1
   )
 }
@@ -5479,7 +5516,17 @@ var render = function() {
             }
           }),
           _vm._v(" "),
-          _c("v-toolbar-title", [_vm._v("Ticket System")])
+          _c("v-toolbar-title", [_vm._v("Ticket System")]),
+          _vm._v(" "),
+          _c("v-progress-linear", {
+            attrs: {
+              active: _vm.loading,
+              indeterminate: _vm.loading,
+              bottom: "",
+              absolute: "",
+              color: "grey"
+            }
+          })
         ],
         1
       ),
@@ -5501,10 +5548,18 @@ var render = function() {
             "v-sheet",
             { staticClass: "pa-4 d-flex justify-space-between align-center" },
             [
-              _c("v-avatar", { staticClass: "grey", attrs: { size: "64" } }),
+              _c("v-avatar", { staticClass: "grey", attrs: { size: "64" } }, [
+                _c("span", { staticClass: "font-weight-bold" }, [_vm._v("J.V")])
+              ]),
               _vm._v(" "),
-              _c("span", { staticClass: "font-weight-light" }, [
-                _vm._v("john@vuetifyjs.com")
+              _c("div", { staticClass: "d-flex flex-column" }, [
+                _c("span", { staticClass: "text-center font-weight-medium" }, [
+                  _vm._v("Super Admin")
+                ]),
+                _vm._v(" "),
+                _c("span", { staticClass: "font-weight-light" }, [
+                  _vm._v("john@vuetifyjs.com")
+                ])
               ])
             ],
             1
@@ -5517,20 +5572,29 @@ var render = function() {
             { staticClass: "pa-0" },
             _vm._l(_vm.links, function(ref) {
               var icon = ref[0]
-              var text = ref[1]
+              var route = ref[1]
+              var text = ref[2]
               return _c(
                 "v-list-item",
-                { key: icon, attrs: { link: "" } },
+                { key: icon, attrs: { to: { path: route }, link: "" } },
                 [
                   _c(
                     "v-list-item-icon",
-                    [_c("v-icon", [_vm._v(_vm._s(icon))])],
+                    [
+                      _c("v-icon", [
+                        _vm._v("\n            " + _vm._s(icon) + "\n          ")
+                      ])
+                    ],
                     1
                   ),
                   _vm._v(" "),
                   _c(
                     "v-list-item-content",
-                    [_c("v-list-item-title", [_vm._v(_vm._s(text))])],
+                    [
+                      _c("v-list-item-title", [
+                        _vm._v("\n            " + _vm._s(text) + "\n          ")
+                      ])
+                    ],
                     1
                   )
                 ],
@@ -5548,7 +5612,11 @@ var render = function() {
         [
           _c(
             "v-container",
-            { staticClass: "py-6 px-6", attrs: { fluid: "" } },
+            {
+              staticClass: "px-6",
+              class: { "py-2": _vm.drawer, "py-4": !_vm.drawer },
+              attrs: { fluid: "" }
+            },
             [_vm._t("default")],
             2
           )
@@ -64389,9 +64457,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vuetify/lib/components/VList */ "./node_modules/vuetify/lib/components/VList/index.js");
 /* harmony import */ var vuetify_lib_components_VMain__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vuetify/lib/components/VMain */ "./node_modules/vuetify/lib/components/VMain/index.js");
 /* harmony import */ var vuetify_lib_components_VNavigationDrawer__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify/lib/components/VNavigationDrawer */ "./node_modules/vuetify/lib/components/VNavigationDrawer/index.js");
-/* harmony import */ var vuetify_lib_components_VSheet__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/lib/components/VSheet */ "./node_modules/vuetify/lib/components/VSheet/index.js");
-/* harmony import */ var vuetify_lib_components_VSystemBar__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuetify/lib/components/VSystemBar */ "./node_modules/vuetify/lib/components/VSystemBar/index.js");
-/* harmony import */ var vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuetify/lib/components/VToolbar */ "./node_modules/vuetify/lib/components/VToolbar/index.js");
+/* harmony import */ var vuetify_lib_components_VProgressLinear__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify/lib/components/VProgressLinear */ "./node_modules/vuetify/lib/components/VProgressLinear/index.js");
+/* harmony import */ var vuetify_lib_components_VSheet__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! vuetify/lib/components/VSheet */ "./node_modules/vuetify/lib/components/VSheet/index.js");
+/* harmony import */ var vuetify_lib_components_VSystemBar__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! vuetify/lib/components/VSystemBar */ "./node_modules/vuetify/lib/components/VSystemBar/index.js");
+/* harmony import */ var vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! vuetify/lib/components/VToolbar */ "./node_modules/vuetify/lib/components/VToolbar/index.js");
 
 
 
@@ -64429,7 +64498,8 @@ var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_
 
 
 
-_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VAppBar: vuetify_lib_components_VAppBar__WEBPACK_IMPORTED_MODULE_4__["VAppBar"],VAppBarNavIcon: vuetify_lib_components_VAppBar__WEBPACK_IMPORTED_MODULE_4__["VAppBarNavIcon"],VAvatar: vuetify_lib_components_VAvatar__WEBPACK_IMPORTED_MODULE_5__["VAvatar"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__["VDivider"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_8__["VIcon"],VList: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VList"],VListItem: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItem"],VListItemContent: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemContent"],VListItemIcon: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemIcon"],VListItemTitle: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemTitle"],VMain: vuetify_lib_components_VMain__WEBPACK_IMPORTED_MODULE_10__["VMain"],VNavigationDrawer: vuetify_lib_components_VNavigationDrawer__WEBPACK_IMPORTED_MODULE_11__["VNavigationDrawer"],VSheet: vuetify_lib_components_VSheet__WEBPACK_IMPORTED_MODULE_12__["VSheet"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VSystemBar: vuetify_lib_components_VSystemBar__WEBPACK_IMPORTED_MODULE_13__["VSystemBar"],VToolbarTitle: vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_14__["VToolbarTitle"]})
+
+_node_modules_vuetify_loader_lib_runtime_installComponents_js__WEBPACK_IMPORTED_MODULE_3___default()(component, {VAppBar: vuetify_lib_components_VAppBar__WEBPACK_IMPORTED_MODULE_4__["VAppBar"],VAppBarNavIcon: vuetify_lib_components_VAppBar__WEBPACK_IMPORTED_MODULE_4__["VAppBarNavIcon"],VAvatar: vuetify_lib_components_VAvatar__WEBPACK_IMPORTED_MODULE_5__["VAvatar"],VContainer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VContainer"],VDivider: vuetify_lib_components_VDivider__WEBPACK_IMPORTED_MODULE_7__["VDivider"],VIcon: vuetify_lib_components_VIcon__WEBPACK_IMPORTED_MODULE_8__["VIcon"],VList: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VList"],VListItem: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItem"],VListItemContent: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemContent"],VListItemIcon: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemIcon"],VListItemTitle: vuetify_lib_components_VList__WEBPACK_IMPORTED_MODULE_9__["VListItemTitle"],VMain: vuetify_lib_components_VMain__WEBPACK_IMPORTED_MODULE_10__["VMain"],VNavigationDrawer: vuetify_lib_components_VNavigationDrawer__WEBPACK_IMPORTED_MODULE_11__["VNavigationDrawer"],VProgressLinear: vuetify_lib_components_VProgressLinear__WEBPACK_IMPORTED_MODULE_12__["VProgressLinear"],VSheet: vuetify_lib_components_VSheet__WEBPACK_IMPORTED_MODULE_13__["VSheet"],VSpacer: vuetify_lib_components_VGrid__WEBPACK_IMPORTED_MODULE_6__["VSpacer"],VSystemBar: vuetify_lib_components_VSystemBar__WEBPACK_IMPORTED_MODULE_14__["VSystemBar"],VToolbarTitle: vuetify_lib_components_VToolbar__WEBPACK_IMPORTED_MODULE_15__["VToolbarTitle"]})
 
 
 /* hot reload */
@@ -64515,6 +64585,14 @@ var map = {
 	"./auth/Login.vue": [
 		"./resources/js/pages/auth/Login.vue",
 		"auth-Login"
+	],
+	"./auth/Register": [
+		"./resources/js/pages/auth/Register.vue",
+		"auth-Register"
+	],
+	"./auth/Register.vue": [
+		"./resources/js/pages/auth/Register.vue",
+		"auth-Register"
 	]
 };
 function webpackAsyncContext(req) {
@@ -64557,10 +64635,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var axiosInstance = axios__WEBPACK_IMPORTED_MODULE_0___default.a.create({
-  baseURL: "http://localhost".replace(/([^/])$/, '$1/'),
+  baseURL: "http://localhost:8080".replace(/([^/])$/, '$1/'),
   withCredentials: true,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    crossDomain: true,
+    'Access-Control-Allow-Origin': '*'
   }
 });
 axiosInstance.interceptors.request.use(function (request) {
@@ -64650,6 +64730,20 @@ __webpack_require__.r(__webpack_exports__);
   meta: {
     layout: 'Admin'
   }
+}, {
+  path: '/login',
+  name: 'Login',
+  component: Object(_utils_pageComponentPath__WEBPACK_IMPORTED_MODULE_0__["default"])('auth/Login.vue'),
+  meta: {
+    layout: 'Admin'
+  }
+}, {
+  path: '/register',
+  name: 'Register',
+  component: Object(_utils_pageComponentPath__WEBPACK_IMPORTED_MODULE_0__["default"])('auth/Register.vue'),
+  meta: {
+    layout: 'Admin'
+  }
 }]);
 
 /***/ }),
@@ -64672,7 +64766,9 @@ __webpack_require__.r(__webpack_exports__);
 
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
-  auth: _modules_auth__WEBPACK_IMPORTED_MODULE_2__["default"]
+  modules: {
+    auth: _modules_auth__WEBPACK_IMPORTED_MODULE_2__["default"]
+  }
 }));
 
 /***/ }),
@@ -64724,7 +64820,7 @@ var mutations = {
   }
 };
 var actions = {
-  login: function login(_ref3, form) {
+  register: function register(_ref3, form) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
       var commit, _yield$axiosInstance$, data;
 
@@ -64735,7 +64831,7 @@ var actions = {
               commit = _ref3.commit;
               _context.prev = 1;
               _context.next = 4;
-              return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('api/login', form);
+              return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('api/auth/register', form);
 
             case 4:
               _yield$axiosInstance$ = _context.sent;
@@ -64743,25 +64839,25 @@ var actions = {
               commit('SAVE_TOKEN', {
                 token: data.access_token
               });
-              _context.next = 12;
-              break;
+              return _context.abrupt("return", data);
 
-            case 9:
-              _context.prev = 9;
+            case 10:
+              _context.prev = 10;
               _context.t0 = _context["catch"](1);
               console.log(_context.t0);
 
-            case 12:
+            case 13:
             case "end":
               return _context.stop();
           }
         }
-      }, _callee, null, [[1, 9]]);
+      }, _callee, null, [[1, 10]]);
     }))();
   },
-  logout: function logout(_ref4) {
+  login: function login(_ref4, form) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee2() {
-      var commit;
+      var commit, _yield$axiosInstance$2, data;
+
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee2$(_context2) {
         while (1) {
           switch (_context2.prev = _context2.next) {
@@ -64769,29 +64865,32 @@ var actions = {
               commit = _ref4.commit;
               _context2.prev = 1;
               _context2.next = 4;
-              return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('api/logout');
+              return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('api/auth/login', form);
 
             case 4:
-              commit('LOGOUT');
-              _context2.next = 10;
-              break;
+              _yield$axiosInstance$2 = _context2.sent;
+              data = _yield$axiosInstance$2.data;
+              commit('SAVE_TOKEN', {
+                token: data.access_token
+              });
+              return _context2.abrupt("return", data);
 
-            case 7:
-              _context2.prev = 7;
+            case 10:
+              _context2.prev = 10;
               _context2.t0 = _context2["catch"](1);
               console.log(_context2.t0);
 
-            case 10:
+            case 13:
             case "end":
               return _context2.stop();
           }
         }
-      }, _callee2, null, [[1, 7]]);
+      }, _callee2, null, [[1, 10]]);
     }))();
   },
-  user: function user(_ref5) {
+  logout: function logout(_ref5) {
     return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee3() {
-      var commit, _yield$axiosInstance$2, data;
+      var commit, _yield$axiosInstance$3, data;
 
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee3$(_context3) {
         while (1) {
@@ -64800,30 +64899,62 @@ var actions = {
               commit = _ref5.commit;
               _context3.prev = 1;
               _context3.next = 4;
-              return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get('api/user');
+              return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].post('api/auth/logout');
 
             case 4:
-              _yield$axiosInstance$2 = _context3.sent;
-              data = _yield$axiosInstance$2.data;
-              commit('SAVE_USER', data);
-              _context3.next = 12;
-              break;
+              _yield$axiosInstance$3 = _context3.sent;
+              data = _yield$axiosInstance$3.data;
+              commit('LOGOUT');
+              return _context3.abrupt("return", data);
 
-            case 9:
-              _context3.prev = 9;
+            case 10:
+              _context3.prev = 10;
               _context3.t0 = _context3["catch"](1);
               console.log(_context3.t0);
 
-            case 12:
+            case 13:
             case "end":
               return _context3.stop();
           }
         }
-      }, _callee3, null, [[1, 9]]);
+      }, _callee3, null, [[1, 10]]);
+    }))();
+  },
+  user: function user(_ref6) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee4() {
+      var commit, _yield$axiosInstance$4, data;
+
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee4$(_context4) {
+        while (1) {
+          switch (_context4.prev = _context4.next) {
+            case 0:
+              commit = _ref6.commit;
+              _context4.prev = 1;
+              _context4.next = 4;
+              return _plugins_axios__WEBPACK_IMPORTED_MODULE_1__["default"].get('api/auth/user');
+
+            case 4:
+              _yield$axiosInstance$4 = _context4.sent;
+              data = _yield$axiosInstance$4.data;
+              commit('SAVE_USER', data);
+              return _context4.abrupt("return", data);
+
+            case 10:
+              _context4.prev = 10;
+              _context4.t0 = _context4["catch"](1);
+              console.log(_context4.t0);
+
+            case 13:
+            case "end":
+              return _context4.stop();
+          }
+        }
+      }, _callee4, null, [[1, 10]]);
     }))();
   }
 };
 /* harmony default export */ __webpack_exports__["default"] = ({
+  namespaced: true,
   state: state,
   getters: getters,
   mutations: mutations,

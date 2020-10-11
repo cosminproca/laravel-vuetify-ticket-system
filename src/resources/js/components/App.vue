@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <component :is="layout">
+    <component :is="$route.meta.layout && layout">
       <router-view />
     </component>
   </v-app>

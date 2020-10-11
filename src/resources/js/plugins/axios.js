@@ -6,7 +6,9 @@ const axiosInstance = axios.create({
   baseURL: process.env.MIX_APP_URL.replace(/([^/])$/, '$1/'),
   withCredentials: true,
   headers: {
-    'X-Requested-With': 'XMLHttpRequest'
+    'X-Requested-With': 'XMLHttpRequest',
+    crossDomain: true,
+    'Access-Control-Allow-Origin': '*'
   }
 });
 
