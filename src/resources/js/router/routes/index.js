@@ -1,4 +1,6 @@
 import pageComponentPath from '@/utils/pageComponentPath';
+import guest from '@/router/middleware/guest';
+import auth from '@/router/middleware/auth';
 
 export default [
   {
@@ -6,7 +8,8 @@ export default [
     name: 'Home',
     component: pageComponentPath('Home.vue'),
     meta: {
-      layout: 'Admin'
+      layout: 'Admin',
+      middleware: [auth]
     }
   },
   {
@@ -14,7 +17,8 @@ export default [
     name: 'Login',
     component: pageComponentPath('auth/Login.vue'),
     meta: {
-      layout: 'Admin'
+      layout: 'Admin',
+      middleware: [guest]
     }
   },
   {
@@ -22,7 +26,8 @@ export default [
     name: 'Register',
     component: pageComponentPath('auth/Register.vue'),
     meta: {
-      layout: 'Admin'
+      layout: 'Admin',
+      middleware: [guest]
     }
   }
 ];

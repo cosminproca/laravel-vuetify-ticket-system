@@ -19,7 +19,7 @@
         <v-text-field
           v-model="password"
           type="password"
-          :rules="passwordRules"
+          :rules="[...passwordRules, passwordConfirmationRule]"
           label="Password"
           required
         />
@@ -27,7 +27,6 @@
         <v-text-field
           v-model="passwordConfirmation"
           type="password"
-          :rules="passwordRules"
           label="Password Confirmation"
           required
         />
@@ -60,8 +59,7 @@ export default {
       passwordRules: [
         (v) => !!v || 'Password is required',
         (v) =>
-          (v && v.length >= 6 && this.password === this.passwordConfirmation) ||
-          'Password must be longer than 6 characters'
+          (v && v.length >= 6) || 'Password must be longer than 6 characters'
       ],
       email: '',
       emailRules: [
@@ -69,6 +67,13 @@ export default {
         (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
       ]
     };
+  },
+  computed: {
+    passwordConfirmationRule() {
+      return (
+        this.password === this.passwordConfirmation || 'Password must match'
+      );
+    }
   },
   methods: {
     ...mapActions('auth', {
@@ -80,12 +85,15 @@ export default {
 
       this.pending = true;
 
-      const res = await this.register({
+      await this.register({
         email: this.email,
-        password: this.password
+        password: this.password,
+        password_confirmation: this.passwordConfirmation
       });
 
       this.pending = false;
+
+      await this.$router.push({ name: 'Login' });
     }
   }
 };

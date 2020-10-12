@@ -48,11 +48,7 @@ export default {
       valid: true,
       pending: false,
       password: '',
-      passwordRules: [
-        (v) => !!v || 'Password is required',
-        (v) =>
-          (v && v.length >= 6) || 'Password must be longer than 6 characters'
-      ],
+      passwordRules: [(v) => !!v || 'Password is required'],
       email: '',
       emailRules: [
         (v) => !!v || 'E-mail is required',
@@ -70,12 +66,16 @@ export default {
 
       this.pending = true;
 
-      const res = await this.login({
+      await this.login({
         email: this.email,
         password: this.password
       });
 
+      await this.user();
+
       this.pending = false;
+
+      await this.$router.push({ name: 'Home' });
     }
   }
 };

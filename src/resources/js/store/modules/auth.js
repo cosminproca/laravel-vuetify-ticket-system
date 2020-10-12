@@ -6,20 +6,22 @@ const state = {
   token: Cookies.get('token')
 };
 
-const getters = {};
+const getters = {
+  isLogged: (state) => state.user !== null
+};
 
 const mutations = {
   SAVE_TOKEN(state, { token, remember }) {
     state.token = token;
     Cookies.set('token', token, { expires: remember ? 365 : null });
   },
-  SAVE_USER(state, { user }) {
+  SAVE_USER(state, user) {
     state.user = user;
   },
   LOGOUT(state) {
     state.user = null;
     state.token = null;
-    Cookies.delete('token');
+    Cookies.remove('token');
   }
 };
 
@@ -27,7 +29,6 @@ const actions = {
   async register({ commit }, form) {
     try {
       const { data } = await axiosInstance.post('api/auth/register', form);
-      commit('SAVE_TOKEN', { token: data.access_token });
 
       return data;
     } catch (e) {

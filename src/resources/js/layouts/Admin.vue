@@ -19,35 +19,59 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" clipped app>
-      <v-sheet class="pa-4 d-flex justify-space-between align-center">
+      <v-sheet
+        v-if="isLogged"
+        class="pa-4 d-flex justify-space-between align-center"
+      >
         <v-avatar class="grey" size="64">
           <span class="font-weight-bold">J.V</span>
         </v-avatar>
         <div class="d-flex flex-column">
           <span class="text-center font-weight-medium">Super Admin</span>
-          <span class="font-weight-light">john@vuetifyjs.com</span>
+          <span v-if="user" class="font-weight-light">{{ user.email }}</span>
         </div>
       </v-sheet>
 
-      <v-divider />
+      <v-divider v-if="isLogged" />
 
       <v-list class="pa-0">
-        <v-list-item
-          v-for="[icon, route, text] in links"
-          :key="icon"
-          :to="{ path: route }"
-          link
-        >
+        <v-list-item v-if="!isLogged" :to="{ name: 'Login' }" link>
           <v-list-item-icon>
-            <v-icon>
-              {{ icon }}
-            </v-icon>
+            <v-icon>mdi-login</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>
-              {{ text }}
-            </v-list-item-title>
+            <v-list-item-title>Login</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item v-if="!isLogged" :to="{ name: 'Register' }" link>
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Register</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item v-if="isLogged" :to="{ name: 'Home' }" link>
+          <v-list-item-icon>
+            <v-icon>mdi-home</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item v-if="isLogged" @click="logoutUser">
+          <v-list-item-icon>
+            <v-icon>mdi-logout</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Logout</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
@@ -66,23 +90,36 @@
 </template>
 
 <script>
+import { mapState, mapGetters, mapActions } from 'vuex';
+
 export default {
   name: 'Admin',
   data() {
     return {
-      cards: ['Today', 'Yesterday'],
       drawer: true,
-      loading: true,
-      links: [
-        ['mdi-home', '/', 'Home'],
-        ['mdi-account', '/register', 'Register'],
-        ['mdi-login', '/login', 'Login'],
-        ['mdi-logout', '/logout', 'Logout']
-      ]
+      loading: true
     };
+  },
+  computed: {
+    ...mapGetters('auth', {
+      isLogged: 'isLogged'
+    }),
+    ...mapState('auth', {
+      user: 'user'
+    })
   },
   mounted() {
     this.loading = false;
+  },
+  methods: {
+    ...mapActions('auth', {
+      logout: 'logout'
+    }),
+    async logoutUser() {
+      await this.logout();
+
+      await this.$router.push({ name: 'Login' });
+    }
   }
 };
 </script>
