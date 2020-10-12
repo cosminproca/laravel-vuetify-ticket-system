@@ -2173,6 +2173,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'Admin',
@@ -5727,38 +5728,36 @@ var render = function() {
         },
         [
           _vm.isLogged
-            ? _c(
-                "v-sheet",
-                {
-                  staticClass: "pa-4 d-flex justify-space-between align-center"
-                },
-                [
-                  _c(
-                    "v-avatar",
-                    { staticClass: "grey", attrs: { size: "64" } },
-                    [
-                      _c("span", { staticClass: "font-weight-bold" }, [
-                        _vm._v("J.V")
-                      ])
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "d-flex flex-column" }, [
+            ? _c("v-sheet", { staticClass: "pa-4" }, [
+                _c(
+                  "div",
+                  { staticClass: "d-flex align-center mb-4" },
+                  [
                     _c(
-                      "span",
-                      { staticClass: "text-center font-weight-medium" },
-                      [_vm._v("Super Admin")]
+                      "v-avatar",
+                      { staticClass: "grey", attrs: { size: "64" } },
+                      [
+                        _c("span", { staticClass: "font-weight-bold" }, [
+                          _vm._v("J.V")
+                        ])
+                      ]
                     ),
                     _vm._v(" "),
-                    _vm.user
-                      ? _c("span", { staticClass: "font-weight-light" }, [
-                          _vm._v(_vm._s(_vm.user.email))
-                        ])
-                      : _vm._e()
-                  ])
-                ],
-                1
-              )
+                    _c(
+                      "div",
+                      { staticClass: "text-center font-weight-medium ml-10" },
+                      [_vm._v("Super Admin")]
+                    )
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _vm.user
+                  ? _c("div", { staticClass: "font-weight-light" }, [
+                      _vm._v("\n        " + _vm._s(_vm.user.email) + "\n      ")
+                    ])
+                  : _vm._e()
+              ])
             : _vm._e(),
           _vm._v(" "),
           _vm.isLogged ? _c("v-divider") : _vm._e(),

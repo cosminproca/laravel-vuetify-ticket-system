@@ -19,16 +19,17 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" clipped app>
-      <v-sheet
-        v-if="isLogged"
-        class="pa-4 d-flex justify-space-between align-center"
-      >
-        <v-avatar class="grey" size="64">
-          <span class="font-weight-bold">J.V</span>
-        </v-avatar>
-        <div class="d-flex flex-column">
-          <span class="text-center font-weight-medium">Super Admin</span>
-          <span v-if="user" class="font-weight-light">{{ user.email }}</span>
+      <v-sheet v-if="isLogged" class="pa-4">
+        <div class="d-flex align-center mb-4">
+          <v-avatar class="grey" size="64">
+            <span class="font-weight-bold">J.V</span>
+          </v-avatar>
+
+          <div class="text-center font-weight-medium ml-10">Super Admin</div>
+        </div>
+
+        <div v-if="user" class="font-weight-light">
+          {{ user.email }}
         </div>
       </v-sheet>
 
