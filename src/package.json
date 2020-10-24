@@ -1,8 +1,13 @@
 {
   "private": true,
   "scripts": {
-    "test": "jest",
-    "test-watch": "npm run test -- --watchAll",
+    "test:cypress": "npx cypress open",
+    "test:cypress:all": "npm run test:cypress:chrome && npm run test:cypress:firefox && npm run test:cypress:edge",
+    "test:cypress:edge": "npx cypress run --browser edge",
+    "test:cypress:chrome": "npx cypress run --browser chrome",
+    "test:cypress:firefox": "npx cypress run --browser firefox",
+    "test:jest": "jest",
+    "test:jest:watch": "npm run test -- --watchAll",
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
     "watch": "npm run development -- --watch",
