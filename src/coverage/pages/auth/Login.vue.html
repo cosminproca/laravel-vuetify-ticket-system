@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">77.78% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>7/9</span>
+                <span class='fraction'>0/6</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">75% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>3/4</span>
+                <span class='fraction'>0/4</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">0% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>4/8</span>
+                <span class='fraction'>0/9</span>
             </div>
         
             
@@ -55,7 +55,7 @@
             Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
         </p>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -141,7 +141,10 @@
 <a name='L82'></a><a href='#L82'>82</a>
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
-<a name='L85'></a><a href='#L85'>85</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L85'></a><a href='#L85'>85</a>
+<a name='L86'></a><a href='#L86'>86</a>
+<a name='L87'></a><a href='#L87'>87</a>
+<a name='L88'></a><a href='#L88'>88</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -182,22 +185,23 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -217,6 +221,8 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -251,37 +257,38 @@
           required
         /&gt;
 &nbsp;
-        &lt;v-btn
-          type="submit"
-          :disabled="!valid || pending"
-          :loading="pending"
-          color="success"
-          class="mr-4 mt-4"
-        &gt;
-          Login
-        &lt;/v-btn&gt;
+        &lt;div class="d-flex justify-space-between"&gt;
+          &lt;v-btn
+            type="submit"
+            :disabled="!valid || pending"
+            :loading="pending"
+            color="success"
+            class="mr-4 mt-4"
+          &gt;
+            Login
+          &lt;/v-btn&gt;
+          &lt;v-btn class="mr-4 mt-4 blue" type="button" to="/register"&gt;
+            Sign Up
+          &lt;/v-btn&gt;
+        &lt;/div&gt;
       &lt;/v-form&gt;
     &lt;/v-card-text&gt;
   &lt;/v-card&gt;
 &lt;/template&gt;
 &nbsp;
 &lt;script&gt;
-import { mapActions } from 'vuex';
+<span class="cstat-no" title="statement not covered" >import { mapActions } from 'vuex';</span>
 &nbsp;
 export default {
   name: 'Login',
-  data() {
-    return {
+<span class="fstat-no" title="function not covered" >  data() {</span>
+<span class="cstat-no" title="statement not covered" >    return {</span>
       valid: true,
       pending: false,
       password: '',
-      passwordRules: [
-        (v) =&gt; !!v || 'Password is required',
-        (v) =&gt;
-          (v &amp;&amp; v.length &gt;= 6) || 'Password must be longer than 6 characters'
-      ],
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      passwordRules: [(v) =&gt; !!v || 'Password is required'],</span></span>
       email: '',
-      emailRules: [
+<span class="cstat-no" title="statement not covered" ><span class="fstat-no" title="function not covered" >      emailRules: [</span></span>
         (v) =&gt; !!v || 'E-mail is required',
         (v) =&gt; /.+@.+\..+/.test(v) || 'E-mail must be valid'
       ]
@@ -297,12 +304,14 @@ export default {
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      this.pending = true;</span>
 &nbsp;
-<span class="cstat-no" title="statement not covered" >      const res = await this.login({</span>
+<span class="cstat-no" title="statement not covered" >      await this.login({</span>
         email: this.email,
         password: this.password
       });
 &nbsp;
 <span class="cstat-no" title="statement not covered" >      this.pending = false;</span>
+&nbsp;
+<span class="cstat-no" title="statement not covered" >      await this.$router.push({ name: 'Home' });</span>
     }
   }
 };
@@ -316,7 +325,7 @@ export default {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Mon Oct 12 2020 15:57:58 GMT+0300 (Eastern European Summer Time)
+                at Sat Oct 24 2020 16:24:07 GMT+0300 (Eastern European Summer Time)
             </div>
         </div>
         <script src="../../prettify.js"></script>

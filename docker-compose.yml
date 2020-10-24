@@ -16,6 +16,7 @@ services:
     depends_on:
       - php
       - mysql
+      - cypress
     networks:
       - laravel
 
@@ -25,12 +26,29 @@ services:
     restart: unless-stopped
     tty: true
     ports:
-      - "3306:3306"
+      - "4000:3306"
     environment:
-      MYSQL_DATABASE: homestead
-      MYSQL_USER: homestead
-      MYSQL_PASSWORD: secret
-      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: laravel
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
+      SERVICE_TAGS: dev
+      SERVICE_NAME: mysql
+    networks:
+      - laravel
+
+  cypress:
+    image: mysql:5.7.29
+    container_name: cypress
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "4001:3306"
+    environment:
+      MYSQL_DATABASE: cypress
+      MYSQL_USER: root
+      MYSQL_PASSWORD: password
+      MYSQL_ROOT_PASSWORD: password
       SERVICE_TAGS: dev
       SERVICE_NAME: mysql
     networks:

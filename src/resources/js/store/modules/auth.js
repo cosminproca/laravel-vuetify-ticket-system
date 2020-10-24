@@ -29,20 +29,24 @@ const actions = {
   async register({ commit }, form) {
     try {
       const { data } = await axiosInstance.post('api/auth/register', form);
+      commit('SAVE_USER', data.user);
 
       return data;
     } catch (e) {
       console.log(e);
+      return e.response.data;
     }
   },
   async login({ commit }, form) {
     try {
       const { data } = await axiosInstance.post('api/auth/login', form);
       commit('SAVE_TOKEN', { token: data.access_token });
+      commit('SAVE_USER', data.user);
 
       return data;
     } catch (e) {
       console.log(e);
+      return e.response.data;
     }
   },
   async logout({ commit }) {
@@ -53,6 +57,7 @@ const actions = {
       return data;
     } catch (e) {
       console.log(e);
+      return e.response.data;
     }
   },
   async user({ commit }) {
@@ -63,6 +68,7 @@ const actions = {
       return data;
     } catch (e) {
       console.log(e);
+      return e.response.data;
     }
   }
 };

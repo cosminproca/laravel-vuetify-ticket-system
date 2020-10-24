@@ -1,5 +1,5 @@
 <template>
-  <v-card max-width="400px" class="mt-4 pa-2">
+  <v-card min-width="300px" max-width="400px" class="mt-4 pa-2">
     <v-card-title>Register</v-card-title>
     <v-card-text>
       <v-form
@@ -19,27 +19,31 @@
         <v-text-field
           v-model="password"
           type="password"
-          :rules="[...passwordRules, passwordConfirmationRule]"
+          :rules="[...passwordRules]"
           label="Password"
           required
         />
 
         <v-text-field
           v-model="passwordConfirmation"
+          :rules="[...passwordConfirmationRules, confirmationRule]"
           type="password"
           label="Password Confirmation"
           required
         />
 
-        <v-btn
-          type="submit"
-          :disabled="!valid || pending"
-          :loading="pending"
-          color="success"
-          class="mr-4 mt-4"
-        >
-          Register
-        </v-btn>
+        <div class="d-flex justify-space-between">
+          <v-btn
+            type="submit"
+            :disabled="!valid || pending"
+            :loading="pending"
+            color="success"
+            class="mr-4 mt-4"
+          >
+            Register
+          </v-btn>
+          <v-btn class="mt-4 blue" type="button" to="/login">Login</v-btn>
+        </div>
       </v-form>
     </v-card-text>
   </v-card>
@@ -56,20 +60,25 @@ export default {
       pending: false,
       password: '',
       passwordConfirmation: '',
+      passwordConfirmationRules: [
+        (passwordConfirmation) =>
+          !!passwordConfirmation || 'Password confirmation is required'
+      ],
       passwordRules: [
-        (v) => !!v || 'Password is required',
-        (v) =>
-          (v && v.length >= 6) || 'Password must be longer than 6 characters'
+        (password) => !!password || 'Password is required',
+        (password) =>
+          (password && password.length >= 6) ||
+          'Password must be longer than 6 characters'
       ],
       email: '',
       emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
+        (email) => !!email || 'E-mail is required',
+        (email) => /.+@.+\..+/.test(email) || 'E-mail must be valid'
       ]
     };
   },
   computed: {
-    passwordConfirmationRule() {
+    confirmationRule() {
       return (
         this.password === this.passwordConfirmation || 'Password must match'
       );

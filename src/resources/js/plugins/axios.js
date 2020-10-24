@@ -14,6 +14,7 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.request.use((request) => {
   const token = store.state['auth/token'];
+
   if (token) {
     request.headers.common['Authorization'] = `Bearer ${token}`;
   }

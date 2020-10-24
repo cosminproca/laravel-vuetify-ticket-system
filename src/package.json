@@ -23,6 +23,7 @@
     "babel-loader": "^8.1.0",
     "babel-preset-env": "^1.7.0",
     "cross-env": "^7.0",
+    "cypress": "^5.4.0",
     "deepmerge": "^4.2.2",
     "eslint": "^7.11.0",
     "eslint-config-prettier": "^6.12.0",
@@ -45,6 +46,8 @@
   },
   "dependencies": {
     "js-cookie": "^2.2.1",
+    "vee-validate": "^3.4.3",
+    "vform": "^1.0.1",
     "vue": "^2.6.12",
     "vue-router": "^3.4.6",
     "vuetify": "^2.3.13",

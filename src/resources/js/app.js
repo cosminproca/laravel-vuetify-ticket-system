@@ -1,12 +1,14 @@
 import Vue from 'vue';
-import vuetify from '@/plugins/vuetify';
+import App from '@/components/App.vue';
+
 import router from '@/router';
 import store from '@/store';
 
+import vuetify from '@/plugins/vuetify';
+import '@/plugins/vee-validate';
+
 import '@/components';
 import '@/layouts';
-
-import App from '@/components/App.vue';
 
 new Vue({
   store,

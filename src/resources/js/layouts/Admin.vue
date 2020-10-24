@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <v-app>
     <v-system-bar app>
       <v-spacer />
     </v-system-bar>
@@ -87,7 +87,7 @@
         <slot />
       </v-container>
     </v-main>
-  </div>
+  </v-app>
 </template>
 
 <script>

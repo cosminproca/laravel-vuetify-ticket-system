@@ -1,59 +1,67 @@
 <template>
-  <v-card max-width="400px" class="mt-4 pa-2">
-    <v-card-title>Login</v-card-title>
-    <v-card-text>
-      <v-form
-        ref="form"
-        v-model="valid"
-        lazy-validation
-        @submit.prevent="submit"
-      >
-        <v-text-field
-          v-model="email"
-          type="email"
-          :rules="emailRules"
-          label="E-mail"
-          required
-        />
+  <VeeValidateForm
+    v-slot="{ handleSubmit, validated, invalid }"
+    :errors="errors"
+  >
+    <v-card min-width="300px" max-width="400px" class="pa-2">
+      <v-card-title>Login</v-card-title>
+      <v-card-text>
+        <v-form @submit.prevent="handleSubmit(submit)">
+          <VeeValidateTextInput
+            v-model="email"
+            type="email"
+            name="email"
+            label="E-mail"
+            rules="email|required"
+            required
+          />
 
-        <v-text-field
-          v-model="password"
-          type="password"
-          :rules="passwordRules"
-          label="Password"
-          required
-        />
+          <VeeValidateTextInput
+            v-model="password"
+            type="password"
+            name="password"
+            label="Password"
+            rules="min:6|required"
+            required
+          />
 
+          <input type="submit" class="d-none" />
+        </v-form>
+      </v-card-text>
+      <v-card-actions class="mx-2 d-flex justify-space-between align-center">
         <v-btn
-          type="submit"
-          :disabled="!valid || pending"
+          :disabled="invalid || !validated || pending"
           :loading="pending"
           color="success"
-          class="mr-4 mt-4"
+          @click="handleSubmit(submit)"
         >
           Login
         </v-btn>
-      </v-form>
-    </v-card-text>
-  </v-card>
+        <v-btn class="blue" type="button" :to="{ name: 'Register' }">
+          Sign Up
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </VeeValidateForm>
 </template>
 
 <script>
+import VeeValidateForm from '@/components/VeeValidateForm';
+import VeeValidateTextInput from '@/components/VeeValidateTextInput';
 import { mapActions } from 'vuex';
 
 export default {
   name: 'Login',
+  components: {
+    VeeValidateForm,
+    VeeValidateTextInput
+  },
   data() {
     return {
-      valid: true,
       pending: false,
-      password: '',
-      passwordRules: [(v) => !!v || 'Password is required'],
+      errors: null,
       email: '',
-      emailRules: [
-        (v) => !!v || 'E-mail is required',
-        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid'
-      ]
+      password: ''
     };
   },
   methods: {
@@ -62,18 +70,20 @@ export default {
       user: 'user'
     }),
     async submit() {
-      if (!this.$refs.form.validate()) return;
-
       this.pending = true;
 
-      await this.login({
+      const res = await this.login({
         email: this.email,
         password: this.password
       });
 
-      await this.user();
-
       this.pending = false;
+
+      if (res.password) {
+        this.errors = res;
+
+        return;
+      }
 
       await this.$router.push({ name: 'Home' });
     }
