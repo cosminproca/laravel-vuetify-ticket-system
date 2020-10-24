@@ -25,7 +25,11 @@
             required
           />
 
-          <input type="submit" class="d-none" />
+          <input
+            type="submit"
+            :disabled="invalid || !validated || pending"
+            class="d-none"
+          />
         </v-form>
       </v-card-text>
       <v-card-actions class="mx-2 d-flex justify-space-between align-center">
