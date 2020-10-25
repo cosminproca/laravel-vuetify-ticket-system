@@ -25,7 +25,9 @@
             <span class="font-weight-bold">J.V</span>
           </v-avatar>
 
-          <div class="text-center font-weight-medium ml-10">Super Admin</div>
+          <div class="text-center font-weight-medium ml-10">
+            {{ user.roles[0].name }}
+          </div>
         </div>
 
         <div v-if="user" class="font-weight-light">
