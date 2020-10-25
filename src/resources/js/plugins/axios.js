@@ -3,7 +3,9 @@ import Vue from 'vue';
 import store from '@/store';
 
 const axiosInstance = axios.create({
-  baseURL: process.env.MIX_APP_URL.replace(/([^/])$/, '$1/'),
+  baseURL:
+    process.env.MIX_APP_URL?.replace(/([^/])$/, '$1/') ||
+    'http://localhost:8080',
   withCredentials: true,
   headers: {
     'X-Requested-With': 'XMLHttpRequest',

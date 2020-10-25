@@ -1,4 +1,5 @@
 export const layouts = {
   GUEST: 'Guest',
-  ADMIN: 'Admin'
+  ADMIN: 'Admin',
+  CLIENT: 'Client'
 };

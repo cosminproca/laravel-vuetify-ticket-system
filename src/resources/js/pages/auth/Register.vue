@@ -1,88 +1,103 @@
 <template>
-  <v-card min-width="300px" max-width="400px" class="mt-4 pa-2">
-    <v-card-title>Register</v-card-title>
-    <v-card-text>
-      <v-form
-        ref="form"
-        v-model="valid"
-        lazy-validation
-        @submit.prevent="submit"
-      >
-        <v-text-field
-          v-model="email"
-          type="email"
-          :rules="emailRules"
-          label="E-mail"
-          required
-        />
+  <VeeValidateForm
+    v-slot="{ handleSubmit, validated, invalid }"
+    :errors="errors"
+  >
+    <v-card min-width="300px" max-width="400px" class="mt-4 pa-2">
+      <v-card-title>Register</v-card-title>
+      <v-card-text>
+        <v-form @submit.prevent="handleSubmit(submit)">
+          <VeeValidateTextInput
+            v-model="email"
+            data-automation="email"
+            type="email"
+            name="email"
+            label="E-mail"
+            rules="email|required"
+            required
+          />
 
-        <v-text-field
-          v-model="password"
-          type="password"
-          :rules="[...passwordRules]"
-          label="Password"
-          required
-        />
+          <VeeValidateTextInput
+            v-model="password"
+            data-automation="password"
+            type="password"
+            name="password"
+            label="Password"
+            rules="min:6|required"
+            required
+          />
 
-        <v-text-field
-          v-model="passwordConfirmation"
-          :rules="[...passwordConfirmationRules, confirmationRule]"
-          type="password"
-          label="Password Confirmation"
-          required
-        />
+          <VeeValidateTextInput
+            v-model="passwordConfirmation"
+            data-automation="password_confirmation"
+            type="password"
+            name="passwordConfirmation"
+            label="Password Confirmation"
+            rules="min:6|required|confirmed:password"
+            required
+          />
 
-        <div class="d-flex justify-space-between">
-          <v-btn
+          <input
+            data-automation="hidden_submit_input"
             type="submit"
-            :disabled="!valid || pending"
-            :loading="pending"
-            color="success"
-            class="mr-4 mt-4"
+            :disabled="invalid || !validated || pending"
+            class="d-none"
+          />
+
+          <div
+            v-if="successMessage"
+            class="d-flex align-center justify-space-between"
           >
-            Register
-          </v-btn>
-          <v-btn class="mt-4 blue" type="button" to="/login">Login</v-btn>
-        </div>
-      </v-form>
-    </v-card-text>
-  </v-card>
+            <v-progress-circular indeterminate color="green" />
+            <p class="ml-3 mb-0 green--text">
+              {{ successMessage }}
+            </p>
+          </div>
+        </v-form>
+      </v-card-text>
+      <v-card-actions class="mx-2 d-flex justify-space-between align-center">
+        <v-btn
+          data-automation="submit_button"
+          :disabled="invalid || !validated || pending"
+          :loading="pending"
+          color="success"
+          @click="handleSubmit(submit)"
+        >
+          Register
+        </v-btn>
+        <v-btn
+          data-automation="register_link"
+          class="blue"
+          type="button"
+          :to="{ name: 'login' }"
+        >
+          Sign In
+        </v-btn>
+      </v-card-actions>
+    </v-card>
+  </VeeValidateForm>
 </template>
 
 <script>
 import { mapActions } from 'vuex';
+import VeeValidateTextInput from '@/components/VeeValidateTextInput';
+import VeeValidateForm from '@/components/VeeValidateForm';
 
 export default {
   name: 'Register',
+  components: {
+    VeeValidateTextInput,
+    VeeValidateForm
+  },
   data() {
     return {
-      valid: true,
       pending: false,
-      password: '',
-      passwordConfirmation: '',
-      passwordConfirmationRules: [
-        (passwordConfirmation) =>
-          !!passwordConfirmation || 'Password confirmation is required'
-      ],
-      passwordRules: [
-        (password) => !!password || 'Password is required',
-        (password) =>
-          (password && password.length >= 6) ||
-          'Password must be longer than 6 characters'
-      ],
+      errors: null,
+      successMessage: '',
       email: '',
-      emailRules: [
-        (email) => !!email || 'E-mail is required',
-        (email) => /.+@.+\..+/.test(email) || 'E-mail must be valid'
-      ]
+      password: '',
+      passwordConfirmation: ''
     };
-  },
-  computed: {
-    confirmationRule() {
-      return (
-        this.password === this.passwordConfirmation || 'Password must match'
-      );
-    }
   },
   methods: {
     ...mapActions('auth', {
@@ -90,11 +105,9 @@ export default {
       user: 'user'
     }),
     async submit() {
-      if (!this.$refs.form.validate()) return;
-
       this.pending = true;
 
-      await this.register({
+      const res = await this.register({
         email: this.email,
         password: this.password,
         password_confirmation: this.passwordConfirmation
@@ -102,7 +115,18 @@ export default {
 
       this.pending = false;
 
-      await this.$router.push({ name: 'Login' });
+      if (res.errors) {
+        this.errors = res.errors;
+
+        return;
+      }
+
+      this.successMessage =
+        'Account created successfully, redirecting to the login page.';
+
+      setTimeout(() => {
+        this.$router.push({ name: 'login' });
+      }, 2000);
     }
   }
 };

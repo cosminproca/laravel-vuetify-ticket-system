@@ -9,6 +9,7 @@
         <v-form @submit.prevent="handleSubmit(submit)">
           <VeeValidateTextInput
             v-model="email"
+            data-automation="email"
             type="email"
             name="email"
             label="E-mail"
@@ -18,6 +19,7 @@
 
           <VeeValidateTextInput
             v-model="password"
+            data-automation="password"
             type="password"
             name="password"
             label="Password"
@@ -26,14 +28,26 @@
           />
 
           <input
+            data-automation="hidden_submit_input"
             type="submit"
             :disabled="invalid || !validated || pending"
             class="d-none"
           />
+
+          <div
+            v-if="successMessage"
+            class="d-flex align-center justify-space-between"
+          >
+            <v-progress-circular indeterminate color="green" />
+            <p class="ml-3 mb-0 green--text">
+              {{ successMessage }}
+            </p>
+          </div>
         </v-form>
       </v-card-text>
       <v-card-actions class="mx-2 d-flex justify-space-between align-center">
         <v-btn
+          data-automation="submit_button"
           :disabled="invalid || !validated || pending"
           :loading="pending"
           color="success"
@@ -41,7 +55,12 @@
         >
           Login
         </v-btn>
-        <v-btn class="blue" type="button" :to="{ name: 'Register' }">
+        <v-btn
+          data-automation="register_link"
+          class="blue"
+          type="button"
+          :to="{ name: 'register' }"
+        >
           Sign Up
         </v-btn>
       </v-card-actions>
@@ -52,7 +71,7 @@
 <script>
 import VeeValidateForm from '@/components/VeeValidateForm';
 import VeeValidateTextInput from '@/components/VeeValidateTextInput';
-import { mapActions } from 'vuex';
+import { mapState, mapActions } from 'vuex';
 
 export default {
   name: 'Login',
@@ -64,14 +83,20 @@ export default {
     return {
       pending: false,
       errors: null,
+      successMessage: '',
       email: '',
       password: ''
     };
   },
+  computed: {
+    ...mapState('auth', {
+      user: 'user'
+    })
+  },
   methods: {
     ...mapActions('auth', {
       login: 'login',
-      user: 'user'
+      fetchUser: 'user'
     }),
     async submit() {
       this.pending = true;
@@ -83,13 +108,17 @@ export default {
 
       this.pending = false;
 
-      if (res.password) {
-        this.errors = res;
+      if (res.errors) {
+        this.errors = res.errors;
 
         return;
       }
 
-      await this.$router.push({ name: 'Home' });
+      this.successMessage = 'Logged in, you will be redirected soon.';
+
+      setTimeout(() => {
+        this.$router.push({ name: this.user.roles[0].name });
+      }, 1000);
     }
   }
 };

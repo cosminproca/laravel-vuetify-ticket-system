@@ -26,10 +26,10 @@ const mutations = {
 };
 
 const actions = {
+  // eslint-disable-next-line no-unused-vars
   async register({ commit }, form) {
     try {
       const { data } = await axiosInstance.post('api/auth/register', form);
-      commit('SAVE_USER', data.user);
 
       return data;
     } catch (e) {

@@ -36,13 +36,13 @@ class AuthController extends Controller {
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
         if (!$token = auth()->attempt($validator->validated())) {
-            return response()->json([
+            return response()->json(['errors' => [
                 'password' => ['Invalid password']
-            ], 401);
+            ]], 401);
         }
 
         return $this->createNewToken($token);
@@ -63,17 +63,21 @@ class AuthController extends Controller {
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 422);
+            return response()->json(['errors' => $validator->errors()], 422);
         }
 
+        $data = $validator->validated();
+
         $user = User::create(array_merge(
-            $validator->validated(),
-            ['password' => bcrypt($request->password)]
+            $data,
+            ['password' => bcrypt($data['password'])]
         ));
+
+        $user->assignRole('client');
 
         return response()->json([
             'message' => 'User successfully registered',
-            'user' => $user
+            'user' => $user->load('roles')
         ], 201);
     }
 
@@ -107,7 +111,7 @@ class AuthController extends Controller {
      */
     public function user(): JsonResponse
     {
-        return response()->json(auth()->user());
+        return response()->json(auth()->user()->load('roles'));
     }
 
     /**
@@ -123,7 +127,7 @@ class AuthController extends Controller {
             'access_token' => $token,
             'token_type' => 'bearer',
             'expires_in' => auth()->factory()->getTTL() * 60,
-            'user' => auth()->user()
+            'user' => auth()->user()->load('roles')
         ]);
     }
 }

@@ -1,54 +1,60 @@
 import { createLocalVue, mount } from '@vue/test-utils';
-import Login from '@/pages/auth/Login';
+import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
+import router from '@/router';
+import flushPromises from 'flush-promises';
+import Login from '@/pages/auth/Login';
 
 describe('Login', () => {
   let wrapper;
   let vuetify;
 
-  const localVue = createLocalVue();
-
   beforeEach(() => {
+    const localVue = createLocalVue();
+
     vuetify = new Vuetify();
+
+    localVue.use(VueRouter);
 
     wrapper = mount(Login, {
       localVue,
+      router,
       vuetify
     });
   });
 
-  it('is a Vue instance', () => {
-    expect(wrapper.isVueInstance).toBeTruthy();
+  it('display validation errors', async () => {
+    await wrapper.find('input[data-automation=email]').setValue('');
+    await wrapper.find('input[data-automation=password]').setValue('');
+
+    await flushPromises();
+
+    const errors = await wrapper.find('.v-messages');
+    expect(errors.text()).toBeTruthy();
   });
 
-  it('display validation errors', () => {
-    wrapper.find('[type=email]').setValue('');
-    wrapper.find('[type=password]').setValue('');
+  it('disabled button', async () => {
+    await wrapper.find('input[data-automation=email]').setValue('');
+    await wrapper.find('input[data-automation=password]').setValue('');
 
-    expect(wrapper.vm.$refs.form.validate()).toBe(false);
+    const button = await wrapper.find('button[data-automation=submit_button]');
+
+    await flushPromises();
+
+    expect(button.attributes().disabled).toBeDefined();
   });
 
-  it('disabled button', (done) => {
-    wrapper.find('[type=email]').setValue('');
-    wrapper.find('[type=password]').setValue('');
+  it('validates good inputs', async () => {
+    await wrapper
+      .find('input[data-automation=email]')
+      .setValue('gigel.example@example.com');
+    await wrapper
+      .find('input[data-automation=password]')
+      .setValue('password123');
 
-    const button = wrapper.find('[type=submit]');
-    button.trigger('click');
+    await flushPromises();
 
-    wrapper.vm.$refs.form.validate();
-
-    wrapper.vm.$nextTick(async () => {
-      await expect(
-        wrapper.find('[type=submit]').attributes().disabled
-      ).toBeDefined();
-      done();
-    });
-  });
-
-  it('validates good inputs', () => {
-    wrapper.find('[type=email]').setValue('gigel.example@example.com');
-    wrapper.find('[type=password]').setValue('password123');
-
-    expect(wrapper.vm.$refs.form.validate()).toBe(true);
+    const errors = await wrapper.find('.v-messages');
+    expect(errors.text()).toBeFalsy();
   });
 });

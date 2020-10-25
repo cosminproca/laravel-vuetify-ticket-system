@@ -1,21 +1,13 @@
 import pageComponentPath from '@/utils/pageComponentPath';
 import { layouts } from '@/utils/constants';
 import guest from '@/router/middleware/guest';
-import auth from '@/router/middleware/auth';
+import client from '@/router/routes/client';
+import admin from '@/router/routes/admin';
 
-export default [
+const auth = [
   {
     path: '/',
-    name: 'Home',
-    component: pageComponentPath('Home.vue'),
-    meta: {
-      layout: layouts.ADMIN,
-      middleware: [auth]
-    }
-  },
-  {
-    path: '/login',
-    name: 'Login',
+    name: 'login',
     component: pageComponentPath('auth/Login.vue'),
     meta: {
       layout: layouts.GUEST,
@@ -24,7 +16,7 @@ export default [
   },
   {
     path: '/register',
-    name: 'Register',
+    name: 'register',
     component: pageComponentPath('auth/Register.vue'),
     meta: {
       layout: layouts.GUEST,
@@ -32,3 +24,5 @@ export default [
     }
   }
 ];
+
+export default auth.concat(client).concat(admin);

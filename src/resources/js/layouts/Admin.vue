@@ -7,7 +7,7 @@
     <v-app-bar clipped-left app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
-      <v-toolbar-title>Ticket System</v-toolbar-title>
+      <v-toolbar-title>Admin Ticket System</v-toolbar-title>
 
       <v-progress-linear
         :active="loading"
@@ -36,17 +36,7 @@
       <v-divider v-if="isLogged" />
 
       <v-list class="pa-0">
-        <v-list-item v-if="!isLogged" :to="{ name: 'Login' }" link>
-          <v-list-item-icon>
-            <v-icon>mdi-login</v-icon>
-          </v-list-item-icon>
-
-          <v-list-item-content>
-            <v-list-item-title>Login</v-list-item-title>
-          </v-list-item-content>
-        </v-list-item>
-
-        <v-list-item v-if="!isLogged" :to="{ name: 'Register' }" link>
+        <v-list-item v-if="!isLogged" :to="{ name: 'register' }" link>
           <v-list-item-icon>
             <v-icon>mdi-account</v-icon>
           </v-list-item-icon>
@@ -56,7 +46,7 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item v-if="isLogged" :to="{ name: 'Home' }" link>
+        <v-list-item v-if="isLogged" :to="{ name: user.roles[0].name }" link>
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -119,7 +109,7 @@ export default {
     async logoutUser() {
       await this.logout();
 
-      await this.$router.push({ name: 'Login' });
+      await this.$router.push({ name: 'login' });
     }
   }
 };

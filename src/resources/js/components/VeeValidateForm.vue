@@ -1,7 +1,7 @@
 <template>
   <validation-observer
     v-slot="{ handleSubmit, validated, invalid }"
-    ref="login"
+    ref="form"
     slim
   >
     <slot v-bind="{ handleSubmit, validated, invalid }" />
@@ -19,7 +19,7 @@ export default {
   },
   watch: {
     errors(errors) {
-      this.$refs.login.setErrors(errors);
+      this.$refs.form.setErrors(errors);
     }
   }
 };

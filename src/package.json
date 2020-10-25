@@ -50,6 +50,7 @@
     "vuetifyjs-mix-extension": "0.0.14"
   },
   "dependencies": {
+    "flush-promises": "^1.0.2",
     "js-cookie": "^2.2.1",
     "vee-validate": "^3.4.3",
     "vform": "^1.0.1",

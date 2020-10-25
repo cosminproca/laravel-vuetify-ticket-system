@@ -1,55 +1,87 @@
 import { createLocalVue, mount } from '@vue/test-utils';
-import Register from '@/pages/auth/Register';
+import VueRouter from 'vue-router';
 import Vuetify from 'vuetify';
+import router from '@/router';
+import flushPromises from 'flush-promises';
+import Register from '@/pages/auth/Register';
 
 describe('Register', () => {
   let wrapper;
   let vuetify;
 
-  const localVue = createLocalVue();
-
   beforeEach(() => {
+    const localVue = createLocalVue();
+
     vuetify = new Vuetify();
+
+    localVue.use(VueRouter);
 
     wrapper = mount(Register, {
       localVue,
+      router,
       vuetify
     });
   });
 
-  it('Should be a Vue instance', () => {
-    expect(wrapper.isVueInstance).toBeTruthy();
+  it('display validation errors', async () => {
+    await wrapper.find('input[data-automation=email]').setValue('');
+    await wrapper.find('input[data-automation=password]').setValue('');
+    await wrapper
+      .find('input[data-automation=password_confirmation]')
+      .setValue('');
+
+    await flushPromises();
+
+    const errors = await wrapper.find('.v-messages');
+    expect(errors.text()).toBeTruthy();
   });
 
-  it('display validation errors', () => {
-    wrapper.find('[type=email]').setValue('');
-    wrapper.find('[type=password]').setValue('');
+  it('disabled button', async () => {
+    await wrapper.find('input[data-automation=email]').setValue('');
+    await wrapper.find('input[data-automation=password]').setValue('');
+    await wrapper
+      .find('input[data-automation=password_confirmation]')
+      .setValue('');
 
-    expect(wrapper.vm.$refs.form.validate()).toBe(false);
+    const button = await wrapper.find('button[data-automation=submit_button]');
+
+    await flushPromises();
+
+    expect(button.attributes().disabled).toBeDefined();
   });
 
-  it('disabled button', (done) => {
-    wrapper.find('[type=email]').setValue('');
-    wrapper.find('[type=password]').setValue('');
+  it('confirms password', async () => {
+    await wrapper
+      .find('input[data-automation=email]')
+      .setValue('test@example.com');
+    await wrapper.find('input[data-automation=password]').setValue('password');
+    const passwordConfirmation = await wrapper.find(
+      'input[data-automation=password_confirmation]'
+    );
 
-    const button = wrapper.find('[type=submit]');
-    button.trigger('click');
+    await passwordConfirmation.setValue('passwordd');
+    await passwordConfirmation.trigger('focus');
+    await passwordConfirmation.trigger('blur');
 
-    wrapper.vm.$refs.form.validate();
+    const button = await wrapper.find('button[data-automation=submit_button]');
 
-    wrapper.vm.$nextTick(async () => {
-      await expect(
-        wrapper.find('[type=submit]').attributes().disabled
-      ).toBeDefined();
-      done();
-    });
+    await flushPromises();
+
+    expect(button.attributes().disabled).toBeDefined();
   });
 
-  it('validates good inputs', () => {
-    wrapper.find('[type=email]').setValue('gigel.example@example.com');
-    wrapper.find('[type=password]').setValue('password123');
-    wrapper.findAll('input').at(2).setValue('password123');
+  it('validates good inputs', async () => {
+    await wrapper
+      .find('input[data-automation=email]')
+      .setValue('test@example.com');
+    await wrapper.find('input[data-automation=password]').setValue('password');
+    await wrapper
+      .find('input[data-automation=password_confirmation]')
+      .setValue('password');
 
-    expect(wrapper.vm.$refs.form.validate()).toBe(true);
+    await flushPromises();
+
+    const errors = await wrapper.find('.v-messages');
+    expect(errors.text()).toBeFalsy();
   });
 });
