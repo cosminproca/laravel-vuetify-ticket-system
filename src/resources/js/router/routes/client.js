@@ -1,7 +1,6 @@
 import pageComponentPath from '@/utils/pageComponentPath';
 import { layouts } from '@/utils/constants';
-import auth from '@/router/middleware/auth';
-import client from '@/router/middleware/client';
+import auth from '@/middleware/auth';
 
 export default [
   {
@@ -10,7 +9,25 @@ export default [
     component: pageComponentPath('client/Client.vue'),
     meta: {
       layout: layouts.CLIENT,
-      middleware: [auth, client]
+      middleware: [auth]
+    }
+  },
+  {
+    path: '/client/tickets/create',
+    name: 'client.tickets.create',
+    component: pageComponentPath('client/tickets/Create.vue'),
+    meta: {
+      layout: layouts.CLIENT,
+      middleware: [auth]
+    }
+  },
+  {
+    path: '/client/tickets',
+    name: 'client.tickets.index',
+    component: pageComponentPath('client/tickets/Index.vue'),
+    meta: {
+      layout: layouts.CLIENT,
+      middleware: [auth]
     }
   }
 ];

@@ -44,7 +44,7 @@ describe('Register', () => {
         .contains('Register')
         .click();
 
-      cy.contains('Home');
+      cy.contains('Login');
     });
   });
 });

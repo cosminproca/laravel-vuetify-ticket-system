@@ -1,7 +1,6 @@
 import pageComponentPath from '@/utils/pageComponentPath';
 import { layouts } from '@/utils/constants';
-import auth from '@/router/middleware/auth';
-import admin from '@/router/middleware/admin';
+import auth from '@/middleware/auth';
 
 export default [
   {
@@ -10,7 +9,7 @@ export default [
     component: pageComponentPath('admin/Admin.vue'),
     meta: {
       layout: layouts.ADMIN,
-      middleware: [auth, admin]
+      middleware: [auth]
     }
   }
 ];

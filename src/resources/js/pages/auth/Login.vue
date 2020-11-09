@@ -45,33 +45,51 @@
           </div>
         </v-form>
       </v-card-text>
-      <v-card-actions class="mx-2 d-flex justify-space-between align-center">
-        <v-btn
-          data-automation="submit_button"
-          :disabled="invalid || !validated || pending"
-          :loading="pending"
-          color="success"
-          @click="handleSubmit(submit)"
-        >
-          Login
-        </v-btn>
-        <v-btn
-          data-automation="register_link"
-          class="blue"
-          type="button"
-          :to="{ name: 'register' }"
-        >
-          Sign Up
-        </v-btn>
+      <v-card-actions>
+        <v-container class="mx-2">
+          <v-row class="mb-4">
+            <router-link :to="{ name: 'forgot.password' }">
+              Forgot your password?
+            </router-link>
+          </v-row>
+          <v-row justify="space-between">
+            <v-btn
+              data-automation="submit_button"
+              :disabled="
+                invalid || !validated || pending || successMessage !== ''
+              "
+              :loading="pending"
+              color="success"
+              @click="handleSubmit(submit)"
+            >
+              Login
+            </v-btn>
+            <v-btn
+              data-automation="register_link"
+              :disabled="pending || successMessage !== ''"
+              color="blue"
+              type="button"
+              :to="{ name: 'register' }"
+            >
+              Sign Up
+            </v-btn>
+          </v-row>
+          <v-row class="mt-4" justify="center">
+            <v-btn color="red"><v-icon>mdi-google</v-icon></v-btn>
+            <v-btn class="mx-4" color="blue">
+              <v-icon>mdi-facebook</v-icon>
+            </v-btn>
+          </v-row>
+        </v-container>
       </v-card-actions>
     </v-card>
   </VeeValidateForm>
 </template>
 
 <script>
-import VeeValidateForm from '@/components/VeeValidateForm';
 import VeeValidateTextInput from '@/components/VeeValidateTextInput';
-import { mapState, mapActions } from 'vuex';
+import VeeValidateForm from '@/components/VeeValidateForm';
+import { mapState, mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Login',
@@ -91,6 +109,9 @@ export default {
   computed: {
     ...mapState('auth', {
       user: 'user'
+    }),
+    ...mapGetters('auth', {
+      userRole: 'userRole'
     })
   },
   methods: {
@@ -116,9 +137,7 @@ export default {
 
       this.successMessage = 'Logged in, you will be redirected soon.';
 
-      setTimeout(() => {
-        this.$router.push({ name: this.user.roles[0].name });
-      }, 1000);
+      await this.$router.push({ name: this.userRole.name });
     }
   }
 };

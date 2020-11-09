@@ -58,7 +58,7 @@
       <v-card-actions class="mx-2 d-flex justify-space-between align-center">
         <v-btn
           data-automation="submit_button"
-          :disabled="invalid || !validated || pending"
+          :disabled="invalid || !validated || pending || successMessage !== ''"
           :loading="pending"
           color="success"
           @click="handleSubmit(submit)"
@@ -67,6 +67,7 @@
         </v-btn>
         <v-btn
           data-automation="register_link"
+          :disabled="pending || successMessage !== ''"
           class="blue"
           type="button"
           :to="{ name: 'login' }"
@@ -124,9 +125,7 @@ export default {
       this.successMessage =
         'Account created successfully, redirecting to the login page.';
 
-      setTimeout(() => {
-        this.$router.push({ name: 'login' });
-      }, 2000);
+      await this.$router.push({ name: 'login' });
     }
   }
 };

@@ -20,10 +20,22 @@ describe('Login', () => {
       cy.contains('required');
     });
 
-    it('requires the correct password', () => {
+    it('requires the correct email', () => {
       cy.visit('/');
 
       cy.get('input[data-automation="email"]').type('test@example.com');
+      cy.get('input[data-automation="password"]').type('password');
+      cy.get('button[data-automation="submit_button"]')
+        .contains('Login')
+        .click();
+
+      cy.contains('invalid');
+    });
+
+    it('requires the correct password', () => {
+      cy.visit('/');
+
+      cy.get('input[data-automation="email"]').type('test.admin@example.com');
       cy.get('input[data-automation="password"]').type('testing');
       cy.get('button[data-automation="submit_button"]')
         .contains('Login')
@@ -37,7 +49,7 @@ describe('Login', () => {
     it('requires the correct password', () => {
       cy.visit('/');
 
-      cy.get('input[data-automation="email"]').type('test@example.com');
+      cy.get('input[data-automation="email"]').type('test.admin@example.com');
       cy.get('input[data-automation="password"]').type('password');
       cy.get('button[data-automation="submit_button"]')
         .contains('Login')

@@ -19,14 +19,14 @@
     </v-app-bar>
 
     <v-navigation-drawer v-model="drawer" clipped app>
-      <v-sheet v-if="isLogged" class="pa-4">
+      <v-sheet class="pa-4">
         <div class="d-flex align-center mb-4">
           <v-avatar class="grey" size="64">
             <span class="font-weight-bold">J.V</span>
           </v-avatar>
 
           <div class="text-center font-weight-medium ml-10">
-            {{ user.roles[0].name }}
+            {{ userRole.name }}
           </div>
         </div>
 
@@ -35,10 +35,10 @@
         </div>
       </v-sheet>
 
-      <v-divider v-if="isLogged" />
+      <v-divider />
 
       <v-list class="pa-0">
-        <v-list-item v-if="isLogged" :to="{ name: user.roles[0].name }" link>
+        <v-list-item :to="{ name: 'client' }" link exact>
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
@@ -48,7 +48,27 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item v-if="isLogged" @click="logoutUser">
+        <v-list-item :to="{ name: 'client.tickets.create' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-exclamation</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Create Ticket</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item :to="{ name: 'client.tickets.index' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-format-list-bulleted</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>View Tickets</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item @click="logoutUser">
           <v-list-item-icon>
             <v-icon>mdi-logout</v-icon>
           </v-list-item-icon>
@@ -63,6 +83,7 @@
     <v-main>
       <v-container
         class="px-6"
+        fill-height
         :class="{ 'py-2': drawer, 'py-4': !drawer }"
         fluid
       >
@@ -85,7 +106,8 @@ export default {
   },
   computed: {
     ...mapGetters('auth', {
-      isLogged: 'isLogged'
+      isLogged: 'isLogged',
+      userRole: 'userRole'
     }),
     ...mapState('auth', {
       user: 'user'

@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Exceptions\InvalidPasswordException;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\ValidationException;
-
 
 class AuthController extends Controller {
 
@@ -26,7 +26,7 @@ class AuthController extends Controller {
      *
      * @param Request $request
      * @return JsonResponse
-     * @throws ValidationException
+     * @throws ValidationException|InvalidPasswordException
      */
     public function login(Request $request): JsonResponse
     {
@@ -40,9 +40,7 @@ class AuthController extends Controller {
         }
 
         if (!$token = auth()->attempt($validator->validated())) {
-            return response()->json(['errors' => [
-                'password' => ['Invalid password']
-            ]], 401);
+            throw new InvalidPasswordException("User {$request->email}");
         }
 
         return $this->createNewToken($token);

@@ -1,6 +1,6 @@
 export default ({ next, store }) => {
   if (store.getters['auth/isLogged']) {
-    next({ name: store.state.auth.user.roles[0].name });
+    next({ name: store.getters['auth/userRole'].name });
   } else {
     next();
   }

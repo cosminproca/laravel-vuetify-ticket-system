@@ -14,7 +14,7 @@
 
 <script>
 export default {
-  name: 'VeeValidateInput',
+  name: 'VeeValidateTextInput',
   props: {
     rules: {
       type: [String, Object],

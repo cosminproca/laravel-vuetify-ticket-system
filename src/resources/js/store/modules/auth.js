@@ -1,5 +1,5 @@
-import axiosInstance from '@/plugins/axios';
 import Cookies from 'js-cookie';
+import { login, logout, register, user } from '@/api/auth';
 
 const state = {
   user: null,
@@ -7,13 +7,17 @@ const state = {
 };
 
 const getters = {
-  isLogged: (state) => state.user !== null
+  isLogged: (state) => state.user !== null && !state.user.message,
+  userRole: (state) => state.user?.roles[0] ?? null
 };
 
 const mutations = {
   SAVE_TOKEN(state, { token, remember }) {
     state.token = token;
-    Cookies.set('token', token, { expires: remember ? 365 : null });
+
+    Cookies.set('token', token, {
+      expires: remember ? 365 : null
+    });
   },
   SAVE_USER(state, user) {
     state.user = user;
@@ -21,6 +25,7 @@ const mutations = {
   LOGOUT(state) {
     state.user = null;
     state.token = null;
+
     Cookies.remove('token');
   }
 };
@@ -28,48 +33,27 @@ const mutations = {
 const actions = {
   // eslint-disable-next-line no-unused-vars
   async register({ commit }, form) {
-    try {
-      const { data } = await axiosInstance.post('api/auth/register', form);
-
-      return data;
-    } catch (e) {
-      console.log(e);
-      return e.response.data;
-    }
+    return await register(form);
   },
   async login({ commit }, form) {
-    try {
-      const { data } = await axiosInstance.post('api/auth/login', form);
-      commit('SAVE_TOKEN', { token: data.access_token });
-      commit('SAVE_USER', data.user);
+    const res = await login(form);
 
-      return data;
-    } catch (e) {
-      console.log(e);
-      return e.response.data;
-    }
+    commit('SAVE_TOKEN', { token: res.access_token });
+    commit('SAVE_USER', res.user);
+
+    return res;
   },
   async logout({ commit }) {
-    try {
-      const { data } = await axiosInstance.post('api/auth/logout');
-      commit('LOGOUT');
+    const res = await logout();
+    commit('LOGOUT');
 
-      return data;
-    } catch (e) {
-      console.log(e);
-      return e.response.data;
-    }
+    return res;
   },
   async user({ commit }) {
-    try {
-      const { data } = await axiosInstance.get('api/auth/user');
-      commit('SAVE_USER', data);
+    const res = await user();
+    commit('SAVE_USER', res);
 
-      return data;
-    } catch (e) {
-      console.log(e);
-      return e.response.data;
-    }
+    return res;
   }
 };
 
