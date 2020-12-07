@@ -15,7 +15,7 @@ Bringing up the Docker Compose network with `site` instead of just using `up`, e
 - **cypress** - `:4001`
 - **php** - `:9000`
 
-If you want to bring down the network use `docker-compose down`.
+If you want to bring down the network use `docker-compose down` (removes the build triggering a rebuild when running `docker-compose up` again and doesn't persist DB operations) or `docker-compose stop`(only stops the container from running leaving the DB intact).
 
 Three additional containers are included that handle Composer, NPM, and Artisan commands *without* having to have these platforms installed on your local computer. Use the following command examples from your project root, modifying them to fit your particular use case.
 
@@ -23,16 +23,20 @@ Three additional containers are included that handle Composer, NPM, and Artisan 
 - `docker-compose run --rm npm run dev`
 - `docker-compose run --rm artisan migrate` 
 
+Keep in mind that you cannot run `php artisan migrate` locally, it has to be either from the docker CLI or `docker-compose run --rm artisan migrate` .
+
+Also due to caching and other mechanisms, if you install everything with `docker-compose run` things won't work correctly when run locally but if you install everything locally with `npm`, `composer` and `php artisan` things will work perfectly fine except for migrations.
+
 ## Persistent MySQL Storage
 
-By default, whenever you bring down the Docker network, your MySQL data will be removed after the containers are destroyed. If you would like to have persistent data that remains after bringing containers down and back up, do the following:
+By default, whenever you bring down the Docker network, your MySQL  data will be removed after the containers are destroyed. If you would  like to have persistent data that remains after bringing containers down and back up, do the following:
 
 1. Create a `mysql` folder in the project root, alongside the `nginx` and `src` folders.
-2. Under the create `docker-compose.yml` file in the `mysql` folder and add the following lines to it:
+2. Under the `mysql` service in your `docker-compose.yml` file, add the following lines:
 
 ```
 volumes:
   - ./mysql:/var/lib/mysql
 ```
 
-3. Repeat steps 1 and 2 and replace `mysql` with `cypress`.
+3. Repeat the steps from above and replace `mysql` with `cypress`.

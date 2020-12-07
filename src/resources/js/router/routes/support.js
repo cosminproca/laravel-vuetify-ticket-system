@@ -8,7 +8,7 @@ export default [
     name: 'support',
     component: pageComponentPath('support/Support.vue'),
     meta: {
-      layout: layouts.CLIENT,
+      layout: layouts.SUPPORT,
       middleware: [auth]
     }
   }
