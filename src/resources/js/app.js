@@ -5,7 +5,11 @@ import router from '@/router';
 import store from '@/store';
 
 import vuetify from '@/plugins/vuetify';
+import '@/plugins/vue-sweetalert2';
 import '@/plugins/vee-validate';
+import '@/plugins/vue-lodash';
+import '@/plugins/vue-quill';
+import '@/plugins/vue-meta';
 
 import '@/components';
 import '@/layouts';

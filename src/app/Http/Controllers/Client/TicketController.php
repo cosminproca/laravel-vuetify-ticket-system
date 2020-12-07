@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers\Client;
 
-use App\Http\Requests\UpdateTicketRequest;
-use App\Http\Requests\StoreTicketRequest;
+use App\Http\Requests\Client\UpdateTicketRequest;
+use App\Http\Requests\Client\StoreTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;
 use App\Models\Ticket;
-use Illuminate\Support\Arr;
 
 class TicketController extends Controller
 {
@@ -17,6 +16,11 @@ class TicketController extends Controller
         'category'
     ];
 
+    public function __construct()
+    {
+        $this->authorizeResource(Ticket::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +28,7 @@ class TicketController extends Controller
      */
     public function index(): JsonResponse
     {
-        return response()->json(TicketResource::collection(Ticket::all()->load($this->relations)));
+        return response()->json(TicketResource::collection(Ticket::ownTickets()->get()->load($this->relations)));
     }
 
     /**
@@ -54,7 +58,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket): JsonResponse
     {
-        return response()->json(new TicketResource($ticket));
+        return response()->json(new TicketResource($ticket->load($this->relations)));
     }
 
     /**
@@ -73,19 +77,6 @@ class TicketController extends Controller
         return response()->json([
             'status' => $status,
             'data' => new TicketResource($ticket->load($this->relations))
-        ]);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Ticket $ticket
-     * @return JsonResponse
-     */
-    public function destroy(Ticket $ticket): JsonResponse
-    {
-        return response()->json([
-            'status' => Ticket::destroy($ticket->id)
         ]);
     }
 }

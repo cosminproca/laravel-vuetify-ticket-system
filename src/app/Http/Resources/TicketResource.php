@@ -17,7 +17,7 @@ class TicketResource extends JsonResource
     {
         return array_merge(parent::toArray($request), [
             'user' => new UserResource($this->whenLoaded('user')),
-            'categories' => CategoryResource::collection($this->whenLoaded('categories')),
+            'category' => new CategoryResource($this->whenLoaded('category')),
             'status' => $this->status->key,
             'created_at' => $this->created_at->toDateString(),
             'updated_at' => $this->updated_at->toDateString()

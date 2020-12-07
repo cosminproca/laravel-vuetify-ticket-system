@@ -9,11 +9,16 @@ use Kirschbaum\PowerJoins\PowerJoins;
 
 class Category extends Model
 {
-    use HasFactory, PowerJoins;
+    use HasFactory;
 
     protected $guarded = [];
 
-    public function ticket(): HasMany
+    public function tickets(): HasMany
+    {
+        return $this->hasMany(Ticket::class);
+    }
+
+    public function faq_articles(): HasMany
     {
         return $this->hasMany(Ticket::class);
     }

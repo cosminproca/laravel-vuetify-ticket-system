@@ -20,6 +20,6 @@ class InvalidPasswordException extends Exception
                     'Invalid password'
                 ]
             ]
-        ], 400);
+        ], 422);
     }
 }

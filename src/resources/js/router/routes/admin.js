@@ -11,5 +11,23 @@ export default [
       layout: layouts.ADMIN,
       middleware: [auth]
     }
+  },
+  {
+    path: '/admin/faq_articles/create',
+    name: 'admin.faq_articles.create',
+    component: pageComponentPath('admin/faq_articles/Create.vue'),
+    meta: {
+      layout: layouts.ADMIN,
+      middleware: [auth]
+    }
+  },
+  {
+    path: '/admin/categories/create',
+    name: 'admin.categories.create',
+    component: pageComponentPath('admin/categories/Create.vue'),
+    meta: {
+      layout: layouts.ADMIN,
+      middleware: [auth]
+    }
   }
 ];

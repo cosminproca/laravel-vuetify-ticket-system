@@ -17,6 +17,7 @@ mix
   .js('resources/js/app.js', 'public/js')
   .vuetify('vuetify-loader')
   .sass('resources/sass/app.scss', 'public/css')
+  .sourceMaps()
   .disableNotifications();
 
 mix.webpackConfig(config);

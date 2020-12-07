@@ -15,3 +15,9 @@ export const ticket_statuses = {
   SOLVED: 'solved',
   CLOSED: 'closed'
 };
+
+export const status_color = {
+  [ticket_statuses.PENDING]: 'orange--text',
+  [ticket_statuses.CLOSED]: 'red--text',
+  [ticket_statuses.SOLVED]: 'green--text'
+};

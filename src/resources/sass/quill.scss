@@ -1,0 +1,112 @@
+.quill--error {
+  .ql-container.ql-snow {
+    border: 1px solid #ff5252;
+    border-top: 0;
+  }
+
+  .ql-toolbar.ql-snow {
+    border: 1px solid #ff5252;
+  }
+
+  .ql-editor .ql-blank::before {
+    color: #ff5252;
+    font-style: normal;
+  }
+
+  .ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: #ff5252;
+  }
+
+  .ql-toolbar .ql-fill {
+    fill: #ff5252;
+    stroke: none;
+  }
+
+  .ql-toolbar .ql-picker {
+    color: #ff5252;
+  }
+
+  .ql-snow .ql-fill,
+  .ql-snow .ql-stroke .ql-fill {
+    fill: #ff5252 !important;
+  }
+}
+
+.quill--light {
+  .ql-container.ql-snow {
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-top: 0;
+  }
+
+  .ql-toolbar.ql-snow {
+    border: 1px solid rgba(0, 0, 0, 0.6);
+  }
+
+  .ql-editor.ql-blank::before {
+    color: rgba(0, 0, 0, 0.6);
+    font-style: normal;
+  }
+
+  .ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: rgba(0, 0, 0, 0.6);
+  }
+
+  .ql-toolbar .ql-fill {
+    fill: rgba(0, 0, 0, 0.6);
+    stroke: none;
+  }
+
+  .ql-toolbar .ql-picker {
+    color: rgba(0, 0, 0, 0.6);
+  }
+
+  .ql-snow .ql-fill,
+  .ql-snow .ql-stroke .ql-fill {
+    fill: rgba(0, 0, 0, 0.6) !important;
+  }
+}
+
+.quill--dark {
+  .ql-container.ql-snow {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    border-top: 0;
+  }
+
+  .ql-toolbar.ql-snow {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+  }
+
+  .ql-editor.ql-blank::before {
+    color: rgba(255, 255, 255, 0.7);
+    font-style: normal;
+  }
+
+  .ql-toolbar .ql-stroke {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.7);
+  }
+
+  .ql-toolbar .ql-fill {
+    fill: rgba(255, 255, 255, 0.7);
+    stroke: none;
+  }
+
+  .ql-toolbar .ql-picker {
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  .ql-snow .ql-fill,
+  .ql-snow .ql-stroke .ql-fill {
+    fill: rgba(255, 255, 255, 0.7) !important;
+  }
+}
+
+.ql-container {
+  min-height: 150px;
+}
+
+.quill-editor {
+  margin: 1rem 0 0 0;
+}

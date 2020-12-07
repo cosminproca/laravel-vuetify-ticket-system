@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="4">
+    <v-col md="8" sm="12">
       <v-card v-if="!loading" class="pa-2">
-        <v-card-title> View Your Tickets </v-card-title>
+        <v-card-title> Your Tickets </v-card-title>
         <v-card-subtitle>
           <v-text-field
             v-model="search"
@@ -11,7 +11,22 @@
             single-line
           />
         </v-card-subtitle>
-        <v-data-table :items="tickets" :headers="headers" :search="search" />
+        <v-data-table :items="tickets" :headers="headers" :search="search">
+          <template #item.status="{ item }">
+            <span :class="statusColor(item.status)">{{ item.status }}</span>
+          </template>
+          <template #item.actions="{ item }">
+            <v-btn
+              :to="{
+                name: 'client.tickets.view',
+                params: { id: item.id }
+              }"
+              :aria-label="`View Ticket ${item.id}`"
+            >
+              View Ticket
+            </v-btn>
+          </template>
+        </v-data-table>
       </v-card>
       <v-skeleton-loader v-else type="table" />
     </v-col>
@@ -19,7 +34,8 @@
 </template>
 
 <script>
-import { mapState, mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
+import { statusColor } from '@/utils/statusColor';
 
 export default {
   name: 'Index',
@@ -45,18 +61,20 @@ export default {
           value: 'created_at'
         },
         {
-          text: 'Update At',
+          text: 'Updated At',
           value: 'updated_at'
+        },
+        {
+          text: 'Actions',
+          value: 'actions',
+          sortable: false
         }
       ]
     };
   },
   computed: {
-    ...mapGetters('tickets', {
+    ...mapGetters('client/tickets', {
       tickets: 'dataArray'
-    }),
-    ...mapState('auth', {
-      user: 'user'
     })
   },
   async mounted() {
@@ -64,9 +82,10 @@ export default {
     this.loading = false;
   },
   methods: {
-    ...mapActions('tickets', {
+    ...mapActions('client/tickets', {
       fetchTickets: 'index'
-    })
+    }),
+    statusColor
   }
 };
 </script>

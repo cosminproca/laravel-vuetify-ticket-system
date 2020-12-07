@@ -5,9 +5,26 @@
     </v-system-bar>
 
     <v-app-bar clipped-left app>
-      <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
+      <v-app-bar-nav-icon
+        aria-label="Menu Burger"
+        @click.stop="drawer = !drawer"
+      />
+
+      <v-btn class="mx-5" text aria-label="Back Button" @click="$router.back()">
+        <v-icon> mdi-keyboard-backspace </v-icon>
+      </v-btn>
 
       <v-toolbar-title>Client Ticket System</v-toolbar-title>
+
+      <v-spacer />
+
+      <v-btn
+        text
+        aria-label="Theme Button"
+        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+      >
+        <v-icon> mdi-theme-light-dark </v-icon>
+      </v-btn>
 
       <v-progress-linear
         :active="loading"
@@ -21,8 +38,8 @@
     <v-navigation-drawer v-model="drawer" clipped app>
       <v-sheet class="pa-4">
         <div class="d-flex align-center mb-4">
-          <v-avatar class="grey" size="64">
-            <span class="font-weight-bold">J.V</span>
+          <v-avatar style="background: #363636" size="64">
+            <span>J.V</span>
           </v-avatar>
 
           <div class="text-center font-weight-medium ml-10">
@@ -48,9 +65,19 @@
           </v-list-item-content>
         </v-list-item>
 
-        <v-list-item :to="{ name: 'client.tickets.create' }" link exact>
+        <v-list-item :to="{ name: 'client.faq_articles.index' }" link exact>
           <v-list-item-icon>
             <v-icon>mdi-exclamation</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>See FAQ Articles</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item :to="{ name: 'client.tickets.create' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-ticket-account</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
@@ -60,11 +87,11 @@
 
         <v-list-item :to="{ name: 'client.tickets.index' }" link exact>
           <v-list-item-icon>
-            <v-icon>mdi-format-list-bulleted</v-icon>
+            <v-icon>mdi-table</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
-            <v-list-item-title>View Tickets</v-list-item-title>
+            <v-list-item-title>Your Tickets</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 

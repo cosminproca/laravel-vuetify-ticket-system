@@ -3,6 +3,16 @@
     <v-app-bar app>
       <v-toolbar-title>Ticket System</v-toolbar-title>
 
+      <v-spacer />
+
+      <v-btn
+        text
+        aria-label="Theme Button"
+        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+      >
+        <v-icon> mdi-theme-light-dark </v-icon>
+      </v-btn>
+
       <v-progress-linear
         :active="loading"
         :indeterminate="loading"

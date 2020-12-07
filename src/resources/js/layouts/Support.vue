@@ -9,6 +9,16 @@
 
       <v-toolbar-title>Support Ticket System</v-toolbar-title>
 
+      <v-spacer />
+
+      <v-btn
+        text
+        aria-label="Theme Button"
+        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
+      >
+        <v-icon> mdi-theme-light-dark </v-icon>
+      </v-btn>
+
       <v-progress-linear
         :active="loading"
         :indeterminate="loading"
@@ -22,7 +32,7 @@
       <v-sheet v-if="isLogged" class="pa-4">
         <div class="d-flex align-center mb-4">
           <v-avatar class="grey" size="64">
-            <span class="font-weight-bold">J.V</span>
+            <span>J.V</span>
           </v-avatar>
 
           <div class="text-center font-weight-medium ml-10">

@@ -29,5 +29,32 @@ export default [
       layout: layouts.CLIENT,
       middleware: [auth]
     }
+  },
+  {
+    path: '/client/tickets/:id',
+    name: 'client.tickets.view',
+    component: pageComponentPath('client/tickets/Show.vue'),
+    meta: {
+      layout: layouts.CLIENT,
+      middleware: [auth]
+    }
+  },
+  {
+    path: '/client/faq_articles',
+    name: 'client.faq_articles.index',
+    component: pageComponentPath('client/faq_articles/Index.vue'),
+    meta: {
+      layout: layouts.CLIENT,
+      middleware: [auth]
+    }
+  },
+  {
+    path: '/client/faq_articles/:id',
+    name: 'client.faq_articles.view',
+    component: pageComponentPath('client/faq_articles/Show.vue'),
+    meta: {
+      layout: layouts.CLIENT,
+      middleware: [auth]
+    }
   }
 ];

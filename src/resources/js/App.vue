@@ -18,6 +18,9 @@
 
 <script>
 export default {
+  metaInfo: {
+    description: 'Laravel Ticket System with Vue JS, Vuetify and Docker'
+  },
   computed: {
     layout() {
       return this.$route.meta.layout;

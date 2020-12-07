@@ -1,7 +1,5 @@
 <?php
 
-use App\Http\Controllers\Client\CategoryController;
-use App\Http\Controllers\Client\TicketController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -39,13 +37,30 @@ Route::group([
         Route::post('refresh', 'AuthController@refresh');
     });
 
-    Route::group([
-        'middleware' => 'role:client',
-        'prefix' => 'client'
-    ], function () {
-        Route::apiResources([
-            'tickets' => TicketController::class,
-            'categories' => CategoryController::class
-        ]);
+    Route::name('client.')->group(function() {
+        Route::group([
+            'middleware' => 'role:client',
+            'namespace' => 'App\Http\Controllers\Client',
+            'prefix' => 'client'
+        ], function () {
+            Route::apiResources([
+                'tickets' => 'TicketController',
+                'categories' => 'CategoryController',
+                'faq_articles' => 'FaqArticleController'
+            ]);
+        });
+    });
+
+    Route::name('admin.')->group(function() {
+        Route::group([
+            'middleware' => 'role:admin',
+            'namespace' => 'App\Http\Controllers\Admin',
+            'prefix' => 'admin'
+        ], function () {
+            Route::apiResources([
+                'categories' => 'CategoryController',
+                'faq_articles' => 'FaqArticleController'
+            ]);
+        });
     });
 });

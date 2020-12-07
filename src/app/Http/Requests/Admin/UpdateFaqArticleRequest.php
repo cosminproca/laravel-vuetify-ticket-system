@@ -1,10 +1,11 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\Admin;
 
+use App\Enums\UserRole;
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateTicketRequest extends FormRequest
+class UpdateFaqArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -13,7 +14,7 @@ class UpdateTicketRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return true;
+        return $this->user()->hasRole(UserRole::Admin);
     }
 
     /**
@@ -24,9 +25,9 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['present', 'filled'],
+            'category_id' => ['present', 'filled'],
             'title' => ['present', 'filled'],
-            'description' => ['present', 'filled']
+            'description' => ['present', 'filled'],
         ];
     }
 }

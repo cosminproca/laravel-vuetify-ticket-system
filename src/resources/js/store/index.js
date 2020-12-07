@@ -1,15 +1,17 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 import auth from './modules/auth';
-import tickets from './modules/client/tickets';
-import categories from './modules/client/categories';
+import lang from './modules/lang';
+import client from './modules/client';
+import admin from './modules/admin';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   modules: {
     auth,
-    tickets,
-    categories
+    lang,
+    ...client,
+    ...admin
   }
 });

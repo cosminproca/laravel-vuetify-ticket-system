@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col cols="4">
+    <v-col md="4" sm="12">
       <VeeValidateForm
         v-slot="{ handleSubmit, validated, invalid }"
         :errors="formErrors"
@@ -15,7 +15,7 @@
                 rules="required"
               >
                 <v-autocomplete
-                  v-model="category_id"
+                  v-model="form.category_id"
                   :items="categories"
                   data-automation="category"
                   item-text="name"
@@ -26,7 +26,7 @@
               </validation-provider>
 
               <VeeValidateTextInput
-                v-model="title"
+                v-model="form.title"
                 data-automation="title"
                 name="title"
                 label="Title"
@@ -34,13 +34,11 @@
                 required
               />
 
-              <VeeValidateTextAreaInput
-                v-model="description"
-                data-automation="description"
+              <QuillTextEditor
+                v-model="form.description"
+                label="Description "
                 name="description"
-                label="Description"
                 rules="required"
-                required
               />
 
               <input
@@ -67,6 +65,7 @@
               "
               :loading="pending"
               color="success"
+              aria-label="Create"
               @click="handleSubmit(create)"
             >
               Create
@@ -83,31 +82,33 @@
 </template>
 
 <script>
+import QuillTextEditor from '@/components/QuillTextEditor';
 import VeeValidateForm from '@/components/VeeValidateForm';
 import VeeValidateTextInput from '@/components/VeeValidateTextInput';
-import VeeValidateTextAreaInput from '@/components/VeeValidateTextAreaInput';
 import { mapState, mapGetters, mapActions } from 'vuex';
 
 export default {
   name: 'Create',
   components: {
+    QuillTextEditor,
     VeeValidateForm,
-    VeeValidateTextInput,
-    VeeValidateTextAreaInput
+    VeeValidateTextInput
   },
   data() {
     return {
       pending: false,
       loading: true,
       formErrors: {},
-      successMessage: '',
-      category_id: '',
-      title: '',
-      description: ''
+      form: {
+        title: '',
+        description: '',
+        category_id: ''
+      },
+      successMessage: ''
     };
   },
   computed: {
-    ...mapGetters('categories', {
+    ...mapGetters('client/categories', {
       categories: 'dataArray'
     }),
     ...mapState('auth', {
@@ -119,20 +120,18 @@ export default {
     this.loading = false;
   },
   methods: {
-    ...mapActions('tickets', {
+    ...mapActions('client/tickets', {
       storeTicket: 'store'
     }),
-    ...mapActions('categories', {
+    ...mapActions('client/categories', {
       fetchCategories: 'index'
     }),
     async create() {
       this.pending = true;
 
       const res = await this.storeTicket({
-        user_id: this.user.id,
-        category_id: this.category_id,
-        title: this.title,
-        description: this.description
+        ...this.form,
+        user_id: this.user.id
       });
 
       this.pending = false;
@@ -143,7 +142,17 @@ export default {
         return;
       }
 
-      this.successMessage = 'Ticket created successfully!';
+      this.$swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Ticket created successfully!'
+      });
+
+      this.form = {
+        title: '',
+        description: '',
+        category_id: ''
+      };
     }
   }
 };

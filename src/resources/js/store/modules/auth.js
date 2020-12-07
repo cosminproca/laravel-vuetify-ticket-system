@@ -8,7 +8,8 @@ const state = {
 
 const getters = {
   isLogged: (state) => state.user !== null && !state.user.message,
-  userRole: (state) => state.user?.roles[0] ?? null
+  userRole: (state) => state.user?.roles[0] ?? null,
+  token: (state) => state.token
 };
 
 const mutations = {

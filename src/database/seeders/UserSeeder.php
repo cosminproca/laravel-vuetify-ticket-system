@@ -26,5 +26,11 @@ class UserSeeder extends Seeder
         ]);
 
         $client->assignRole('client');
+
+        $support = User::factory()->create([
+            'email' => 'test.support@example.com',
+        ]);
+
+        $support->assignRole('support');
     }
 }
