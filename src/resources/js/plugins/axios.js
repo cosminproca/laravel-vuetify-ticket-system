@@ -77,7 +77,13 @@ axiosInstance.interceptors.response.use(
       });
     }
 
-    if (status >= 400 && status < 500 && status !== 401 && status !== 422) {
+    if (
+      status >= 400 &&
+      status < 500 &&
+      status !== 401 &&
+      status !== 422 &&
+      status !== 404
+    ) {
       await sweetalert.fire({
         type: 'error',
         title: 'Error',

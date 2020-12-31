@@ -1,4 +1,6 @@
 export default ({ next, to, store }) => {
+  console.log(store.getters['auth/userRole']);
+  console.log(to.meta);
   if (!store.getters['auth/isLogged']) {
     next({ name: 'login' });
   } else {

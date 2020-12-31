@@ -37,7 +37,20 @@
           <div v-html="ticket.description" />
           <v-divider class="my-4" />
           <div class="font-weight-light">Ticket Replies</div>
-          <QuillTextEditor name="reply" />
+          <VeeValidateForm
+            v-slot="{ handleSubmit, validated, invalid }"
+            :errors="formErrors"
+          >
+            <v-form @submit.prevent="handleSubmit(reply)">
+              <QuillTextEditor v-model="form.text" name="reply" />
+              <input
+                data-automation="hidden_submit_input"
+                type="submit"
+                :disabled="invalid || !validated || pending"
+                class="d-none"
+              />
+            </v-form>
+          </VeeValidateForm>
         </v-card-text>
       </v-card>
       <v-skeleton-loader v-else type="card-heading, list-item, list-item" />
@@ -48,17 +61,24 @@
 <script>
 import { mapActions, mapState } from 'vuex';
 import QuillTextEditor from '@/components/QuillTextEditor';
+import VeeValidateForm from '@/components/VeeValidateForm';
 import { statusColor } from '@/utils/statusColor';
 import { ticket_statuses } from '@/utils/constants';
 
 export default {
   name: 'Show',
   components: {
-    QuillTextEditor
+    QuillTextEditor,
+    VeeValidateForm
   },
   data() {
     return {
       loading: true,
+      pending: false,
+      formErrors: {},
+      form: {
+        text: ''
+      },
       ticket_statuses
     };
   },
@@ -75,12 +95,31 @@ export default {
     ...mapActions('client/tickets', {
       fetchTicket: 'show'
     }),
+    ...mapActions('client/ticket_replies', {
+      storeTicketReply: 'store'
+    }),
     statusColor,
     statusColorNoText(status) {
       return this.statusColor(status).replace('--text', '');
     },
     ticketStatusesExceptCurrent(status) {
       return this.lodash.omit(this.ticket_statuses, status.toUpperCase());
+    },
+    async reply() {
+      this.pending = true;
+
+      const res = await this.storeTicket({
+        ...this.form,
+        user_id: this.user.id
+      });
+
+      this.pending = false;
+
+      if (res.errors) {
+        this.formErrors = res.errors;
+
+        return;
+      }
     }
   }
 };

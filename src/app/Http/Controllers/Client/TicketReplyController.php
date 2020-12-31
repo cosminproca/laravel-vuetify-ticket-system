@@ -3,62 +3,73 @@
 namespace App\Http\Controllers\Client;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Client\StoreTicketReplyRequest;
+use App\Http\Requests\Client\UpdateTicketReplyRequest;
+use App\Http\Resources\TicketReplyResource;
+use App\Http\Resources\TicketResource;
+use App\Models\TicketReply;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class TicketReplyController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+    private $relations = [
+        'user',
+        'category'
+    ];
+
+    public function __construct()
     {
-        //
+        $this->authorizeResource(TicketReply::class);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param StoreTicketReplyRequest $request
+     * @return JsonResponse
      */
-    public function store(Request $request)
+    public function store(StoreTicketReplyRequest $request): JsonResponse
     {
-        //
+        $validated_data = $request->validated();
+        $ticketReply = TicketReply::create($validated_data);
+
+        $status = $ticketReply->save();
+
+        return response()->json([
+            'status' => $status,
+            'data' => new TicketReplyResource($ticketReply->load($this->relations))
+        ]);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param TicketReply $ticketReply
+     * @return JsonResponse
      */
-    public function show($id)
+    public function show(TicketReply $ticketReply): JsonResponse
     {
-        //
+        return response()->json(new TicketReplyResource($ticketReply->load($this->relations)));
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param UpdateTicketReplyRequest $request
+     * @param TicketReply $ticketReply
+     * @return JsonResponse
      */
-    public function update(Request $request, $id)
+    public function update(UpdateTicketReplyRequest $request, TicketReply $ticketReply): JsonResponse
     {
-        //
-    }
+        $validated_data = $request->validated();
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        $status = $ticketReply->update($validated_data);
+
+        return response()->json([
+            'status' => $status,
+            'data' => new TicketReplyResource($ticketReply->load($this->relations))
+        ]);
     }
 }

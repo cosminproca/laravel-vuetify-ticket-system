@@ -145,14 +145,11 @@ export default {
       this.$swal.fire({
         icon: 'success',
         title: 'Success',
-        text: 'Ticket created successfully!'
+        text: 'Ticket created successfully!',
+        onClose: () => {
+          this.$router.push({ name: 'client.tickets.index' });
+        }
       });
-
-      this.form = {
-        title: '',
-        description: '',
-        category_id: ''
-      };
     }
   }
 };
