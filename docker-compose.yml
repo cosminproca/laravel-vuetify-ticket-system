@@ -17,6 +17,8 @@ services:
       - php
       - mysql
       - cypress
+      - mailhog
+      - redis
     networks:
       - laravel
 
@@ -107,3 +109,20 @@ services:
     entrypoint: ['php', '/var/www/html/artisan']
     networks:
       - laravel
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    container_name: mailhog
+    ports:
+      - "8003:1025"
+      - "8100:8025"
+    networks:
+    - laravel
+
+  redis:
+    image: redis:alpine
+    container_name: redis
+    ports:
+        - "6379:6379"
+    networks:
+        - laravel

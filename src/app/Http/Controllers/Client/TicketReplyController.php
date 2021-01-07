@@ -6,11 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Client\StoreTicketReplyRequest;
 use App\Http\Requests\Client\UpdateTicketReplyRequest;
 use App\Http\Resources\TicketReplyResource;
-use App\Http\Resources\TicketResource;
 use App\Models\TicketReply;
 use Illuminate\Http\JsonResponse;
-use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 
 class TicketReplyController extends Controller
 {
