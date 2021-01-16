@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center" align="center">
-    <v-col md="4" sm="12">
+    <v-col md="6" sm="12">
       <v-card v-if="!loading" class="pa-2">
         <v-card-title class="d-flex justify-space-between">
           <span>{{ ticket.title }}</span>
@@ -37,6 +37,44 @@
           <div v-html="ticket.description" />
           <v-divider class="my-4" />
           <div class="font-weight-light">Ticket Replies</div>
+          <div
+            v-for="ticket_reply in ticket.ticket_replies"
+            :key="ticket_reply.id"
+            class="d-flex flex-column"
+            :style="
+              ticket_reply.user_id === user.id
+                ? 'align-items: end'
+                : 'align-items: start'
+            "
+          >
+            <div
+              v-if="ticket_reply.user_id === user.id"
+              class="d-flex justify-space-between pa-5 ma-5 blue rounded"
+              style="width: 50%"
+            >
+              <div class="mb-4" v-html="ticket_reply.text" />
+              <div
+                class="d-flex font-italic"
+                style="align-items: end; font-size: 0.7rem"
+              >
+                {{ ticket_reply.updated_at }}
+              </div>
+            </div>
+            <div
+              v-if="ticket_reply.user_id !== user.id"
+              class="d-flex justify-space-between pa-5 ma-5 green rounded"
+              style="width: 50%"
+            >
+              <div class="mb-4" v-html="ticket_reply.text" />
+              <div
+                class="d-flex font-italic"
+                style="align-items: end; font-size: 0.7rem"
+              >
+                {{ ticket_reply.updated_at }}
+              </div>
+            </div>
+          </div>
+          <v-divider class="my-4" />
           <VeeValidateForm
             v-slot="{ handleSubmit, validated, invalid }"
             :errors="formErrors"
@@ -49,6 +87,17 @@
                 :disabled="invalid || !validated || pending"
                 class="d-none"
               />
+              <v-btn
+                class="mt-6"
+                data-automation="submit_button"
+                :disabled="invalid || !validated || pending"
+                :loading="pending"
+                color="success"
+                aria-label="Create"
+                @click="handleSubmit(reply)"
+              >
+                Reply
+              </v-btn>
             </v-form>
           </VeeValidateForm>
         </v-card-text>
@@ -85,6 +134,12 @@ export default {
   computed: {
     ...mapState('client/tickets', {
       ticket: 'model'
+    }),
+    ...mapState('client/ticket_replies', {
+      ticket_replies: 'data'
+    }),
+    ...mapState('auth', {
+      user: 'user'
     })
   },
   async mounted() {
@@ -108,9 +163,10 @@ export default {
     async reply() {
       this.pending = true;
 
-      const res = await this.storeTicket({
+      const res = await this.storeTicketReply({
         ...this.form,
-        user_id: this.user.id
+        user_id: this.user.id,
+        ticket_id: this.ticket.id
       });
 
       this.pending = false;
@@ -120,6 +176,10 @@ export default {
 
         return;
       }
+
+      await this.fetchTicket(this.$route.params.id);
+
+      this.form.text = '';
     }
   }
 };

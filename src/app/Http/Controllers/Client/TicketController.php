@@ -13,6 +13,7 @@ class TicketController extends Controller
 {
     private $relations = [
         'user',
+        'ticket_replies',
         'category'
     ];
 

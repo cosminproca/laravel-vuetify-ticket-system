@@ -49,7 +49,7 @@ class Kernel extends HttpKernel
         TrimStrings::class,
         ConvertEmptyStringsToNull::class,
         SetLocale::class,
-        CachePolicy::class
+        // CachePolicy::class
     ];
 
     /**

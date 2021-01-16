@@ -18,8 +18,8 @@ class TicketReplyResource extends JsonResource
         return array_merge(parent::toArray($request), [
             'user' => new UserResource($this->whenLoaded('user')),
             'ticket' => new TicketResource($this->whenLoaded('ticket')),
-            'created_at' => $this->created_at->toDateString(),
-            'updated_at' => $this->updated_at->toDateString()
+            'created_at' => $this->created_at->toDateTimeString(),
+            'updated_at' => $this->updated_at->toDateTimeString()
         ]);
     }
 }

@@ -9,7 +9,9 @@ import { RESET_MODEL, REMOVE_DATA, SET_DATA, SET_MODEL } from '@/utils/store';
 
 const base = {
   user_id: 0,
-  title: ''
+  text: '',
+  created_at: '',
+  updated_at: ''
 };
 
 const state = {
