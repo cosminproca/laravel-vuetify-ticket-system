@@ -58,12 +58,12 @@ Route::group([
             'namespace' => 'App\Http\Controllers\Support',
             'prefix' => 'support'
         ], function () {
-/*            Route::apiResources([
+            Route::apiResources([
                 'tickets' => 'TicketController',
                 'categories' => 'CategoryController',
                 'ticket_replies' => 'TicketReplyController',
                 'faq_articles' => 'FaqArticleController'
-            ]);*/
+            ]);
         });
     });
 

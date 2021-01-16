@@ -48,13 +48,38 @@
       <v-divider v-if="isLogged" />
 
       <v-list class="pa-0">
-        <v-list-item v-if="isLogged" :to="{ name: user.roles[0].name }" link>
+        <v-list-item
+          v-if="isLogged"
+          :to="{ name: user.roles[0].name }"
+          link
+          exact
+        >
           <v-list-item-icon>
             <v-icon>mdi-home</v-icon>
           </v-list-item-icon>
 
           <v-list-item-content>
             <v-list-item-title>Home</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item :to="{ name: 'support.tickets.index' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-table</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Tickets</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item :to="{ name: 'support.faq_articles.index' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-exclamation</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>FAQ Articles</v-list-item-title>
           </v-list-item-content>
         </v-list-item>
 
