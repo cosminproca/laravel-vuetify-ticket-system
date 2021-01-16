@@ -46,8 +46,24 @@ Route::group([
             Route::apiResources([
                 'tickets' => 'TicketController',
                 'categories' => 'CategoryController',
+                'ticket_replies' => 'TicketReplyController',
                 'faq_articles' => 'FaqArticleController'
             ]);
+        });
+    });
+
+    Route::name('support.')->group(function() {
+        Route::group([
+            'middleware' => 'role:support',
+            'namespace' => 'App\Http\Controllers\Support',
+            'prefix' => 'support'
+        ], function () {
+/*            Route::apiResources([
+                'tickets' => 'TicketController',
+                'categories' => 'CategoryController',
+                'ticket_replies' => 'TicketReplyController',
+                'faq_articles' => 'FaqArticleController'
+            ]);*/
         });
     });
 
@@ -59,6 +75,7 @@ Route::group([
         ], function () {
             Route::apiResources([
                 'categories' => 'CategoryController',
+                'ticket_replies' => 'TicketReplyController',
                 'faq_articles' => 'FaqArticleController'
             ]);
         });

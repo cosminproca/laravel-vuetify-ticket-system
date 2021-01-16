@@ -13,7 +13,7 @@ class TicketReplyController extends Controller
 {
     private $relations = [
         'user',
-        'category'
+        'ticket'
     ];
 
     public function __construct()
