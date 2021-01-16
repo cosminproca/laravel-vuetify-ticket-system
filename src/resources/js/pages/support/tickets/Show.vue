@@ -55,9 +55,9 @@
 
 <script>
 import { mapActions, mapState } from 'vuex';
+import TicketReplyBox from '@/components/TicketReplyBox';
 import { statusColor } from '@/utils/statusColor';
 import { ticket_statuses } from '@/utils/constants';
-import TicketReplyBox from '@/components/TicketReplyBox';
 
 export default {
   name: 'Show',
@@ -76,10 +76,10 @@ export default {
     };
   },
   computed: {
-    ...mapState('client/tickets', {
+    ...mapState('support/tickets', {
       ticket: 'model'
     }),
-    ...mapState('client/ticket_replies', {
+    ...mapState('support/ticket_replies', {
       ticket_replies: 'data'
     }),
     ...mapState('auth', {
@@ -91,10 +91,10 @@ export default {
     this.loading = false;
   },
   methods: {
-    ...mapActions('client/tickets', {
+    ...mapActions('support/tickets', {
       fetchTicket: 'show'
     }),
-    ...mapActions('client/ticket_replies', {
+    ...mapActions('support/ticket_replies', {
       storeTicketReply: 'store'
     }),
     statusColor,
