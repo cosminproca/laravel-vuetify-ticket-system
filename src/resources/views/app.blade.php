@@ -24,7 +24,7 @@
         <!-- Styles -->
         <link href="{{ mix('css/app.css') }}" rel="stylesheet">
     </head>
-    <body>
+    <body style="margin: 0; padding: 0">
         <div id="app"></div>
         <script>
             window.config = @json($config, JSON_THROW_ON_ERROR);
