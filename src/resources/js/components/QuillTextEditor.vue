@@ -1,5 +1,10 @@
 <template>
-  <validation-provider v-slot="{ errors }" :name="name" :rules="rules">
+  <validation-provider
+    v-slot="{ errors }"
+    :name="name"
+    :rules="rules"
+    :mode="mode"
+  >
     <p
       v-if="label"
       class="mb-0 mt-5 v-label"
@@ -40,6 +45,10 @@ export default {
     name: {
       type: String,
       default: ''
+    },
+    mode: {
+      type: String,
+      default: 'eager'
     }
   },
   data() {

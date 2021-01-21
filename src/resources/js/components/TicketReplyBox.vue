@@ -44,7 +44,12 @@
       :errors="formErrors"
     >
       <v-form @submit.prevent="handleSubmit(reply)">
-        <QuillTextEditor v-model="localForm.text" name="reply" />
+        <QuillTextEditor
+          v-model="localForm.text"
+          name="reply"
+          rules="required"
+          mode="passive"
+        />
         <input
           data-automation="hidden_submit_input"
           type="submit"
