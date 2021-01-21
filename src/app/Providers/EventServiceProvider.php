@@ -2,10 +2,13 @@
 
 namespace App\Providers;
 
+use App\Models\Ticket;
+use App\Models\TicketReply;
+use App\Observers\TicketObserver;
+use App\Observers\TicketReplyObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -25,8 +28,9 @@ class EventServiceProvider extends ServiceProvider
      *
      * @return void
      */
-    public function boot()
+    public function boot(): void
     {
-        //
+        Ticket::observe(TicketObserver::class);
+        TicketReply::observe(TicketReplyObserver::class);
     }
 }
