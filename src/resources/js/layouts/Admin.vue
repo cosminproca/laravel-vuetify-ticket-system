@@ -61,6 +61,26 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item :to="{ name: 'admin.tickets.index' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-table</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Tickets</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
+        <v-list-item :to="{ name: 'admin.faq_articles.index' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-exclamation</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>FAQ Articles</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item :to="{ name: 'admin.faq_articles.create' }" link exact>
           <v-list-item-icon>
             <v-icon>mdi-ticket-account</v-icon>
