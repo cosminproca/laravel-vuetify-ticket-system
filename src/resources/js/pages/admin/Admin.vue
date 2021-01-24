@@ -1,39 +1,111 @@
 <template>
   <v-row>
-    <v-col v-for="card in cards" :key="card" cols="12">
-      <v-card>
-        <v-subheader>{{ card }}</v-subheader>
+    <v-col cols="6">
+      <v-card v-if="!loading">
+        <v-card-title>The latest 5 tickets</v-card-title>
 
         <v-list two-line>
-          <template v-for="n in 6">
-            <v-list-item :key="n">
-              <v-list-item-avatar color="grey darken-1"> </v-list-item-avatar>
-
+          <template v-for="ticket in lastFiveTickets">
+            <v-list-item
+              :key="ticket.id"
+              :to="{
+                name: 'admin.tickets.view',
+                params: { id: ticket.id }
+              }"
+            >
               <v-list-item-content>
-                <v-list-item-title>Message {{ n }}</v-list-item-title>
-
+                <v-list-item-title
+                  class="d-flex align-center justify-space-between"
+                >
+                  <div>
+                    {{ ticket.title }}
+                  </div>
+                  <div>
+                    <v-btn :color="statusColorNoText(ticket.status)">
+                      {{ ticket.status }}
+                    </v-btn>
+                  </div>
+                </v-list-item-title>
                 <v-list-item-subtitle>
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                  Nihil repellendus distinctio similique
+                  {{ ticket.user.email }}
                 </v-list-item-subtitle>
               </v-list-item-content>
             </v-list-item>
-
-            <v-divider v-if="n !== 6" :key="`divider-${n}`" inset></v-divider>
           </template>
         </v-list>
       </v-card>
+      <v-skeleton-loader v-else type="card-heading, list-item, list-item" />
+    </v-col>
+    <v-col cols="6">
+      <v-card v-if="!loading">
+        <v-card-title>Most useful FAQ Articles</v-card-title>
+
+        <v-list two-line>
+          <template v-for="faq_article in randomFaqArticles">
+            <v-list-item
+              :key="faq_article.id"
+              :to="{
+                name: 'admin.faq_articles.view',
+                params: { id: faq_article.id }
+              }"
+            >
+              <v-list-item-content>
+                <v-list-item-title>{{ faq_article.title }}</v-list-item-title>
+
+                <v-list-item-subtitle>
+                  {{ faq_article.description }}
+                </v-list-item-subtitle>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
+        </v-list>
+      </v-card>
+      <v-skeleton-loader v-else type="card-heading, list-item, list-item" />
     </v-col>
   </v-row>
 </template>
 
 <script>
+import { mapActions, mapGetters } from 'vuex';
+import { statusColor } from '@/utils/statusColor';
+
 export default {
   name: 'Admin',
   data() {
     return {
-      cards: ['Today', 'Yesterday']
+      loading: true
     };
+  },
+  computed: {
+    ...mapGetters('admin/faq_articles', {
+      faq_articles: 'dataArray'
+    }),
+    ...mapGetters('admin/tickets', {
+      tickets: 'dataArray'
+    }),
+    randomFaqArticles() {
+      return this.lodash.sampleSize(this.faq_articles, 5);
+    },
+    lastFiveTickets() {
+      return this.lodash.takeRight(this.tickets, 5);
+    }
+  },
+  async mounted() {
+    await this.fetchFAQArticles();
+    await this.fetchTickets();
+    this.loading = false;
+  },
+  methods: {
+    ...mapActions('admin/faq_articles', {
+      fetchFAQArticles: 'index'
+    }),
+    ...mapActions('admin/tickets', {
+      fetchTickets: 'index'
+    }),
+    statusColorNoText(status) {
+      return this.statusColor(status).replace('--text', '');
+    },
+    statusColor
   }
 };
 </script>

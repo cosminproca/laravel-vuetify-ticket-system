@@ -10,6 +10,10 @@
         @click.stop="drawer = !drawer"
       />
 
+      <v-btn class="mx-5" text aria-label="Back Button" @click="$router.back()">
+        <v-icon> mdi-keyboard-backspace </v-icon>
+      </v-btn>
+
       <v-toolbar-title>Admin Ticket System</v-toolbar-title>
 
       <v-spacer />
@@ -34,12 +38,19 @@
     <v-navigation-drawer v-model="drawer" clipped app>
       <v-sheet v-if="isLogged" class="pa-4">
         <div class="d-flex align-center mb-4">
-          <v-avatar style="background: #363636" size="64">
-            <span>J.V</span>
+          <v-avatar
+            :style="
+              $vuetify.theme.dark
+                ? 'background: #363636'
+                : 'background: #f0ecec'
+            "
+            size="64"
+          >
+            <span>T.A</span>
           </v-avatar>
 
           <div class="text-center font-weight-medium ml-10">
-            {{ user.roles[0].name }}
+            {{ userRole.name.toUpperCase() }}
           </div>
         </div>
 
@@ -81,6 +92,16 @@
           </v-list-item-content>
         </v-list-item>
 
+        <v-list-item :to="{ name: 'admin.categories.index' }" link exact>
+          <v-list-item-icon>
+            <v-icon>mdi-exclamation</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>Categories</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+
         <v-list-item :to="{ name: 'admin.faq_articles.create' }" link exact>
           <v-list-item-icon>
             <v-icon>mdi-ticket-account</v-icon>
@@ -116,6 +137,7 @@
     <v-main>
       <v-container
         class="px-6"
+        fill-height
         :class="{ 'py-2': drawer, 'py-4': !drawer }"
         fluid
       >
@@ -138,7 +160,8 @@ export default {
   },
   computed: {
     ...mapGetters('auth', {
-      isLogged: 'isLogged'
+      isLogged: 'isLogged',
+      userRole: 'userRole'
     }),
     ...mapState('auth', {
       user: 'user'

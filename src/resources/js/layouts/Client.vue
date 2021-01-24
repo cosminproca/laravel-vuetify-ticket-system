@@ -38,12 +38,19 @@
     <v-navigation-drawer v-model="drawer" clipped app>
       <v-sheet class="pa-4">
         <div class="d-flex align-center mb-4">
-          <v-avatar style="background: #363636" size="64">
-            <span>J.V</span>
+          <v-avatar
+            :style="
+              $vuetify.theme.dark
+                ? 'background: #363636'
+                : 'background: #f0ecec'
+            "
+            size="64"
+          >
+            <span>T.C</span>
           </v-avatar>
 
           <div class="text-center font-weight-medium ml-10">
-            {{ userRole.name }}
+            {{ userRole.name.toUpperCase() }}
           </div>
         </div>
 
