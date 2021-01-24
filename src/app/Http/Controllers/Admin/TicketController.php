@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Support;
+namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\Support\UpdateTicketRequest;
+use App\Http\Requests\Admin\UpdateTicketRequest;
 use App\Http\Resources\TicketResource;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\JsonResponse;

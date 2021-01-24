@@ -5,7 +5,10 @@
         <v-card-title class="d-flex justify-space-between">
           <span>{{ ticket.title }}</span>
           <span>
-            <v-menu offset-y>
+            <v-menu
+              v-if="ticket.status.toLowerCase() === ticket_statuses.SOLVED"
+              offset-y
+            >
               <template #activator="{ on, attrs }">
                 <v-btn
                   :color="statusColorNoText(ticket.status)"
@@ -21,6 +24,7 @@
                     ticket.status
                   )"
                   :key="index"
+                  @click="updateStatus(status)"
                 >
                   <span :class="statusColor(status)" class="mx-auto">
                     {{ status.toUpperCase() }}
@@ -28,6 +32,13 @@
                 </v-list-item>
               </v-list>
             </v-menu>
+            <v-btn
+              v-else
+              :color="statusColorNoText(ticket.status)"
+              style="pointer-events: none"
+            >
+              {{ ticket.status }}
+            </v-btn>
           </span>
         </v-card-title>
         <v-card-subtitle v-show="ticket.category">
@@ -92,7 +103,8 @@ export default {
   },
   methods: {
     ...mapActions('client/tickets', {
-      fetchTicket: 'show'
+      fetchTicket: 'show',
+      updateTicket: 'update'
     }),
     ...mapActions('client/ticket_replies', {
       storeTicketReply: 'store'
@@ -102,7 +114,24 @@ export default {
       return this.statusColor(status).replace('--text', '');
     },
     ticketStatusesExceptCurrent(status) {
-      return this.lodash.omit(this.ticket_statuses, status.toUpperCase());
+      return this.lodash.omit(this.ticket_statuses, [
+        status.toUpperCase(),
+        this.ticket_statuses.CLOSED.toUpperCase()
+      ]);
+    },
+    async updateStatus(status) {
+      const res = await this.updateTicket({
+        ...this.ticket,
+        status
+      });
+
+      if (res.status !== true) return;
+
+      this.$swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Ticket status updated successfully!'
+      });
     },
     async reply(form) {
       this.pending = true;

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Client;
+namespace App\Http\Requests\Admin;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -24,7 +24,10 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'status' => ['present', 'filled']
+            'user_id' => ['present', 'filled'],
+            'status' => ['present', 'filled'],
+            'title' => ['present', 'filled'],
+            'description' => ['present', 'filled']
         ];
     }
 }

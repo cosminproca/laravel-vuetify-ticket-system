@@ -22,3 +22,9 @@ export const status_color = {
   [ticket_statuses.CLOSED]: 'red--text',
   [ticket_statuses.SOLVED]: 'green--text'
 };
+
+export const user_role_color = {
+  [roles.CLIENT]: 'green',
+  [roles.SUPPORT]: 'blue',
+  [roles.ADMIN]: 'purple'
+};

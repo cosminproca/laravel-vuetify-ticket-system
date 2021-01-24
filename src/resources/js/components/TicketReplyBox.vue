@@ -13,33 +13,48 @@
     >
       <div
         v-if="ticket_reply.user_id === user.id"
-        class="d-flex justify-space-between pa-5 ma-5 blue rounded"
+        class="d-flex flex-column pa-5 ma-5 rounded"
+        :class="userRoleColor(ticket_reply.user.roles[0].name)"
         style="width: 50%"
       >
         <div class="mb-4" v-html="ticket_reply.text" />
         <div
-          class="d-flex font-italic"
+          class="d-flex justify-space-between font-italic"
           style="align-items: end; font-size: 0.7rem"
         >
-          {{ ticket_reply.updated_at }}
+          <div>
+            Sent by
+            <span class="font-weight-bold">{{ ticket_reply.user.email }}</span>
+          </div>
+          <div>
+            {{ ticket_reply.updated_at }}
+          </div>
         </div>
       </div>
       <div
         v-if="ticket_reply.user_id !== user.id"
-        class="d-flex justify-space-between pa-5 ma-5 green rounded"
+        class="d-flex flex-column pa-5 ma-5 rounded"
+        :class="userRoleColor(ticket_reply.user.roles[0].name)"
         style="width: 50%"
       >
         <div class="mb-4" v-html="ticket_reply.text" />
         <div
-          class="d-flex font-italic"
+          class="d-flex justify-space-between font-italic"
           style="align-items: end; font-size: 0.7rem"
         >
-          {{ ticket_reply.updated_at }}
+          <div>
+            Sent by
+            <span class="font-weight-bold">{{ ticket_reply.user.email }}</span>
+          </div>
+          <div>
+            {{ ticket_reply.updated_at }}
+          </div>
         </div>
       </div>
     </div>
     <v-divider class="my-4" />
     <VeeValidateForm
+      v-if="ticket.status.toLowerCase() === ticket_statuses.PENDING"
       v-slot="{ handleSubmit, validated, invalid }"
       :errors="formErrors"
     >
@@ -70,6 +85,7 @@
 <script>
 import QuillTextEditor from '@/components/QuillTextEditor';
 import VeeValidateForm from '@/components/VeeValidateForm';
+import { ticket_statuses, user_role_color } from '@/utils/constants';
 
 export default {
   name: 'TicketReplyBox',
@@ -90,7 +106,9 @@ export default {
     return {
       localForm: {
         text: ''
-      }
+      },
+      ticket_statuses,
+      user_role_color
     };
   },
   watch: {
@@ -102,6 +120,9 @@ export default {
     }
   },
   methods: {
+    userRoleColor(role) {
+      return user_role_color[role];
+    },
     reply() {
       this.$emit('reply', this.localForm);
     }

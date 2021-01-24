@@ -46,8 +46,8 @@ Route::group([
             Route::apiResources([
                 'tickets' => 'TicketController',
                 'categories' => 'CategoryController',
-                'ticket_replies' => 'TicketReplyController',
-                'faq_articles' => 'FaqArticleController'
+                'faq_articles' => 'FaqArticleController',
+                'ticket_replies' => 'TicketReplyController'
             ]);
         });
     });
@@ -61,8 +61,8 @@ Route::group([
             Route::apiResources([
                 'tickets' => 'TicketController',
                 'categories' => 'CategoryController',
-                'ticket_replies' => 'TicketReplyController',
-                'faq_articles' => 'FaqArticleController'
+                'faq_articles' => 'FaqArticleController',
+                'ticket_replies' => 'TicketReplyController'
             ]);
         });
     });
@@ -74,9 +74,10 @@ Route::group([
             'prefix' => 'admin'
         ], function () {
             Route::apiResources([
+                'tickets' => 'TicketController',
                 'categories' => 'CategoryController',
-                'ticket_replies' => 'TicketReplyController',
-                'faq_articles' => 'FaqArticleController'
+                'faq_articles' => 'FaqArticleController',
+                'ticket_replies' => 'TicketReplyController'
             ]);
         });
     });
