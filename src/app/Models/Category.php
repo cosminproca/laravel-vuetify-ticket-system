@@ -5,13 +5,17 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Model;
-use Kirschbaum\PowerJoins\PowerJoins;
+use Lorisleiva\LaravelSearchString\Concerns\SearchString;
 
 class Category extends Model
 {
-    use HasFactory;
+    use HasFactory, SearchString;
 
     protected $guarded = [];
+
+    protected $searchStringColumns = [
+        'name' => ['searchable' => true]
+    ];
 
     public function tickets(): HasMany
     {
