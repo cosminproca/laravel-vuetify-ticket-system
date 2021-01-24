@@ -15,7 +15,8 @@ class TicketController extends Controller
         'category',
         'ticket_replies',
         'ticket_replies.user',
-        'ticket_replies.ticket'
+        'ticket_replies.ticket',
+        'ticket_replies.user.roles'
     ];
 
     public function __construct()

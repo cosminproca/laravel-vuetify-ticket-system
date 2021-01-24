@@ -13,8 +13,11 @@ class TicketController extends Controller
 {
     private $relations = [
         'user',
+        'category',
         'ticket_replies',
-        'category'
+        'ticket_replies.user',
+        'ticket_replies.ticket',
+        'ticket_replies.user.roles'
     ];
 
     public function __construct()

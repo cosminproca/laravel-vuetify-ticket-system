@@ -21,6 +21,7 @@
                     ticket.status
                   )"
                   :key="index"
+                  @click="updateStatus(status)"
                 >
                   <span :class="statusColor(status)" class="mx-auto">
                     {{ status.toUpperCase() }}
@@ -92,7 +93,8 @@ export default {
   },
   methods: {
     ...mapActions('support/tickets', {
-      fetchTicket: 'show'
+      fetchTicket: 'show',
+      updateTicket: 'update'
     }),
     ...mapActions('support/ticket_replies', {
       storeTicketReply: 'store'
@@ -103,6 +105,20 @@ export default {
     },
     ticketStatusesExceptCurrent(status) {
       return this.lodash.omit(this.ticket_statuses, status.toUpperCase());
+    },
+    async updateStatus(status) {
+      const res = await this.updateTicket({
+        ...this.ticket,
+        status
+      });
+
+      if (res.status !== true) return;
+
+      this.$swal.fire({
+        icon: 'success',
+        title: 'Success',
+        text: 'Ticket status updated successfully!'
+      });
     },
     async reply(form) {
       this.pending = true;

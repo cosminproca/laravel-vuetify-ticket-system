@@ -25,6 +25,7 @@ class UpdateTicketRequest extends FormRequest
     {
         return [
             'user_id' => ['present', 'filled'],
+            'status' => ['present', 'filled'],
             'title' => ['present', 'filled'],
             'description' => ['present', 'filled']
         ];

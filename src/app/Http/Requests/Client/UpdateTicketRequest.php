@@ -24,9 +24,7 @@ class UpdateTicketRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['present', 'filled'],
-            'title' => ['present', 'filled'],
-            'description' => ['present', 'filled']
+            'status' => ['present', 'filled']
         ];
     }
 }
