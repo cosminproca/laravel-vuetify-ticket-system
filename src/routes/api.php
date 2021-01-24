@@ -43,6 +43,7 @@ Route::group([
             'namespace' => 'App\Http\Controllers\Client',
             'prefix' => 'client'
         ], function () {
+            Route::post('generate-reply', 'ChatBotController@generateReply');
             Route::apiResources([
                 'tickets' => 'TicketController',
                 'categories' => 'CategoryController',

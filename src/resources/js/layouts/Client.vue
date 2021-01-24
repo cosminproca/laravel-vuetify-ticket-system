@@ -123,15 +123,20 @@
       >
         <slot />
       </v-container>
+      <ChatBot />
     </v-main>
   </v-app>
 </template>
 
 <script>
 import { mapState, mapGetters, mapActions } from 'vuex';
+import ChatBot from '@/components/ChatBot';
 
 export default {
   name: 'Client',
+  components: {
+    ChatBot
+  },
   data() {
     return {
       drawer: true,
