@@ -7,6 +7,10 @@
     <v-app-bar clipped-left app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
 
+      <v-btn class="mx-5" text aria-label="Back Button" @click="$router.back()">
+        <v-icon> mdi-keyboard-backspace </v-icon>
+      </v-btn>
+
       <v-toolbar-title>Support Ticket System</v-toolbar-title>
 
       <v-spacer />
@@ -31,12 +35,19 @@
     <v-navigation-drawer v-model="drawer" clipped app>
       <v-sheet v-if="isLogged" class="pa-4">
         <div class="d-flex align-center mb-4">
-          <v-avatar class="grey" size="64">
-            <span>J.V</span>
+          <v-avatar
+            :style="
+              $vuetify.theme.dark
+                ? 'background: #363636'
+                : 'background: #f0ecec'
+            "
+            size="64"
+          >
+            <span>T.S</span>
           </v-avatar>
 
           <div class="text-center font-weight-medium ml-10">
-            {{ user.roles[0].name }}
+            {{ userRole.name.toUpperCase() }}
           </div>
         </div>
 
@@ -98,6 +109,7 @@
     <v-main>
       <v-container
         class="px-6"
+        fill-height
         :class="{ 'py-2': drawer, 'py-4': !drawer }"
         fluid
       >
@@ -120,7 +132,8 @@ export default {
   },
   computed: {
     ...mapGetters('auth', {
-      isLogged: 'isLogged'
+      isLogged: 'isLogged',
+      userRole: 'userRole'
     }),
     ...mapState('auth', {
       user: 'user'

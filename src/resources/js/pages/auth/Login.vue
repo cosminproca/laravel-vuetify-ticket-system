@@ -47,11 +47,6 @@
       </v-card-text>
       <v-card-actions>
         <v-container class="mx-2">
-          <v-row class="mb-4">
-            <router-link :to="{ name: 'forgot.password' }">
-              Forgot your password?
-            </router-link>
-          </v-row>
           <v-row justify="space-between">
             <v-btn
               data-automation="submit_button"

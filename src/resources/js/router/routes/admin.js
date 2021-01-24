@@ -58,6 +58,24 @@ export default [
     }
   },
   {
+    path: '/admin/categories',
+    name: 'admin.categories.index',
+    component: pageComponentPath('admin/categories/Index.vue'),
+    meta: {
+      layout: layouts.ADMIN,
+      middleware: [auth]
+    }
+  },
+  {
+    path: '/admin/categories/:id',
+    name: 'admin.categories.view',
+    component: pageComponentPath('admin/categories/Show.vue'),
+    meta: {
+      layout: layouts.ADMIN,
+      middleware: [auth]
+    }
+  },
+  {
     path: '/admin/categories/create',
     name: 'admin.categories.create',
     component: pageComponentPath('admin/categories/Create.vue'),

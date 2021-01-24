@@ -2,7 +2,7 @@
   <v-row justify="center" align="center">
     <v-col md="8" sm="12">
       <v-card v-if="!loading" class="pa-2">
-        <v-card-title> FAQ Articles </v-card-title>
+        <v-card-title> Categories </v-card-title>
         <v-card-subtitle>
           <v-text-field
             v-model="search"
@@ -11,16 +11,16 @@
             single-line
           />
         </v-card-subtitle>
-        <v-data-table :items="faq_articles" :headers="headers" :search="search">
+        <v-data-table :items="categories" :headers="headers" :search="search">
           <template #item.actions="{ item }">
             <v-btn
               :to="{
-                name: 'support.faq_articles.view',
+                name: 'admin.categories.view',
                 params: { id: item.id }
               }"
-              :aria-label="`View Article ${item.id}`"
+              :aria-label="`View Category ${item.id}`"
             >
-              View Article
+              View Category
             </v-btn>
           </template>
         </v-data-table>
@@ -41,12 +41,8 @@ export default {
       search: '',
       headers: [
         {
-          text: 'Title',
-          value: 'title'
-        },
-        {
-          text: 'Category',
-          value: 'category.name'
+          text: 'Name',
+          value: 'name'
         },
         {
           text: 'Created At',
@@ -65,17 +61,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters('support/faq_articles', {
-      faq_articles: 'dataArray'
+    ...mapGetters('admin/categories', {
+      categories: 'dataArray'
     })
   },
   async mounted() {
-    await this.fetchFAQArticles();
+    await this.fetchCategories();
     this.loading = false;
   },
   methods: {
-    ...mapActions('support/faq_articles', {
-      fetchFAQArticles: 'index'
+    ...mapActions('admin/categories', {
+      fetchCategories: 'index'
     })
   }
 };
